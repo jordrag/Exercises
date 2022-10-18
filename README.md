@@ -1,0 +1,2 @@
+# Exercises
+Some exercises
