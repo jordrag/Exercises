@@ -32,32 +32,36 @@ class Metal(Material):
         return "M"
 
 
+class UsedMaterials(object):
+    def __init__(self):
+        self.mat_1 = Metal(10, "Aluminium")
+        self.mat_2 = Wood(5, "Cedar")
+        self.mat_3 = Glass(8, "Armored glass")
+
+
 class TableDesign(object):
-    def __init__(self, table=None):
+    def __init__(self):
+        materials = UsedMaterials()
 
-        alum = Metal(10, "Aluminium")
-        cedar = Wood(5, "Cedar")
-        arm_glass = Glass(8, "Armored glass")
+        self.table = [[materials.mat_1, materials.mat_1, materials.mat_1, materials.mat_1, materials.mat_1],
+                      [materials.mat_1, materials.mat_2, materials.mat_3, materials.mat_2, materials.mat_1],
+                      [materials.mat_1, materials.mat_3, materials.mat_3, materials.mat_3, materials.mat_1],
+                      [materials.mat_1, materials.mat_2, materials.mat_3, materials.mat_2, materials.mat_1],
+                      [materials.mat_1, materials.mat_1, materials.mat_1, materials.mat_1, materials.mat_1]
+                      ]
 
-        self.table = [[alum, alum, alum, alum, alum],
-                 [alum, cedar, arm_glass, cedar, alum],
-                 [alum, arm_glass, arm_glass, arm_glass, alum],
-                 [alum, cedar, arm_glass, cedar, alum],
-                 [alum, alum, alum, alum, alum]
-                 ]
 
 class Printer(object):
     def __init__(self, table_design):
-
         self.table = table_design.table
 
     def printing(self):
-
         table_width = len(self.table)
         table_len = len(self.table[0])
 
         for i in self.table:
             print('\t'.join(map(str, i)))
+
 
 t = TableDesign()
 p = Printer(t)
