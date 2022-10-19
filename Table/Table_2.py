@@ -1,11 +1,11 @@
-class Material(object):
+class Material(object): # Common materials class
 
     def __init__(self, strength, kind):
         self.kind = kind
         self.strength = strength
 
 
-class Wood(Material):
+class Wood(Material): # Used for wood kind of material
 
     def __init__(self, strength=None, kind=None):
         super(Wood, self).__init__(strength, kind)
@@ -14,7 +14,7 @@ class Wood(Material):
         return "W"
 
 
-class Glass(Material):
+class Glass(Material): # Used for glass kind of material
 
     def __init__(self, strength=None, kind=None):
         super(Glass, self).__init__(strength, kind)
@@ -23,7 +23,7 @@ class Glass(Material):
         return "G"
 
 
-class Metal(Material):
+class Metal(Material): # Used for metal kind of material
 
     def __init__(self, strength=None, kind=None):
         super(Metal, self).__init__(strength, kind)
@@ -32,14 +32,14 @@ class Metal(Material):
         return "M"
 
 
-class UsedMaterials(object):
+class UsedMaterials(object):  # Describing used materials for every unique table with their parameters
     def __init__(self):
         self.mat_1 = Metal(10, "Aluminium")
         self.mat_2 = Wood(5, "Cedar")
         self.mat_3 = Glass(8, "Armored glass")
 
 
-class TableDesign(object):
+class TableDesign(object): # Making the table pattern
     def __init__(self):
         materials = UsedMaterials()
 
@@ -51,7 +51,7 @@ class TableDesign(object):
                       ]
 
 
-class Printer(object):
+class Printer(object): # Printing the ready table on the screen
     def __init__(self, table_design):
         self.table = table_design.table
 
@@ -63,6 +63,6 @@ class Printer(object):
             print('\t'.join(map(str, i)))
 
 
-t = TableDesign()
-p = Printer(t)
-p.printing()
+user_table = TableDesign()
+Printer(user_table).printing()
+
