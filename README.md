@@ -1,2 +1,1 @@
-# Exercises
-Some exercises
+# A repository for some tasks and exercises
