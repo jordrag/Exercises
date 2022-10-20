@@ -7,77 +7,64 @@ class Material(object):  # Common materials class
 
 
 class Linden(Material):  # Липа
+    PRICE = 50
 
-    def __init__(self, price, color="Natural"):
+    def __init__(self, price=PRICE, color="Natural"):
         super(Linden, self).__init__(price, color)
 
     def __str__(self):
         return "Linden"
 
 
-linden = Linden(price=50)
-
-
 class Beech(Material):  # Бук
+    PRICE = 60
 
-    def __init__(self, price, color="Natural"):
+    def __init__(self, price=PRICE, color="Natural"):
         super(Beech, self).__init__(price, color)
 
     def __str__(self):
         return "Beech"
 
 
-beech = Beech(price=60)
-
-
 class Aluminium(Material):  # Алуминий
-
-    def __init__(self, price, color="Natural"):
+    PRICE = 60
+    
+    def __init__(self, price=PRICE, color="Natural"):
         super(Aluminium, self).__init__(price, color)
 
     def __str__(self):
         return "Alum"
 
 
-alumin = Aluminium(price=60)
-
-
 class Steel(Material):  # Стомана
+    PRICE = 80
 
-    def __init__(self, price, color="Natural"):
+    def __init__(self, price=PRICE, color="Natural"):
         super(Steel, self).__init__(price, color)
 
     def __str__(self):
         return "Steel"
 
 
-steel = Steel(price=80)
-
-
 class Glass(Material):  # Стъкло
     PRICE = 35
     COLOR = "Natural"
 
-    def __init__(self, price, color="Natural"):
+    def __init__(self, price=PRICE, color="Natural"):
         super(Glass, self).__init__(price, color)
 
     def __str__(self):
         return "Glass"
 
 
-glass = Glass(price=35)
-
-
 class Hole(Material):  # An empty space option
+    PRICE = 10
 
-    def __init__(self, price, color="None"):
+    def __init__(self, price=PRICE, color="None"):
         super(Hole, self).__init__(price, color)
 
     def __str__(self):
         return "    "
-
-
-hole = Hole(price=10)
 
 
 class Printer(object):  # Printing the ready table on the screen
@@ -110,6 +97,13 @@ class Calculator(object):
 
         return total
 
+
+alumin = Aluminium()
+linden = Linden()
+beech = Beech()
+steel = Steel()
+glass = Glass()
+hole = Hole()
 
 # ************************************  User interface ********************************************
 
