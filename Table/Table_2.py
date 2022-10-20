@@ -54,9 +54,11 @@ class Steel(Material):  # Стомана
 steel = Steel()
 
 
-class Glass(Material):  # Стомана
+class Glass(Material):  # Стъкло
+    PRICE = 35
+    COLOR = "Natural"
 
-    def __init__(self, price=35, color="Mat"):
+    def __init__(self, price=35, color="Natural"):
         super(Glass, self).__init__(price, color)
 
     def __str__(self):
@@ -90,6 +92,15 @@ class Printer(object):  # Printing the ready table on the screen
             print('\t'.join(map(str, item)))
 
 
+class Calculator(object):
+
+    def __init__(self, table_for_calc):
+        self.table_for_calc = table_for_calc
+
+    def calculating(self):
+        pass
+
+
 # ************************************  User interface ********************************************
 
 user_pattern = [[alumin, alumin, alumin, alumin, alumin],
@@ -103,3 +114,5 @@ user_pattern = [[alumin, alumin, alumin, alumin, alumin],
 # *************************************************************************************************
 
 Printer(user_pattern).printing()
+
+# Calculating the price
