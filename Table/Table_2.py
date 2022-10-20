@@ -105,7 +105,7 @@ steel = Steel()
 glass = Glass()
 hole = Hole()
 
-# ************************************  User interface ********************************************
+# ************************************  User interface *********************************************
 
 user_pattern = [[alumin, alumin, alumin, alumin, alumin],
                 [alumin, beech, glass, beech, alumin],
