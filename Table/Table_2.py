@@ -28,7 +28,7 @@ class Beech(Material):  # Бук
 
 class Aluminium(Material):  # Алуминий
     PRICE = 60
-    
+
     def __init__(self, price=PRICE, color="Natural"):
         super(Aluminium, self).__init__(price, color)
 
@@ -67,14 +67,29 @@ class Hole(Material):  # An empty space option
         return "    "
 
 
+class TableDesign(object):
+    def __init__(self, user_table):
+        self.table_for_design = user_table
+        self.work_table = []
+        self.designing_table()
+
+    def designing_table(self):
+
+        table_width = len(self.table_for_design)
+        table_len = len(self.table_for_design[0])
+
+        for row in range(table_width):
+            self.work_table.append([])
+            for col in range(table_len):
+                temp_instance = self.table_for_design[row][col]()
+                self.work_table[row].append(temp_instance)
+
+
 class Printer(object):  # Printing the ready table on the screen
     def __init__(self, table_for_print):
-        self.table = table_for_print
+        self.table = table_for_print.work_table
 
     def printing(self):
-        # table_width = len(self.table)
-        # table_len = len(self.table[0])
-
         for item in self.table:
             print('\t'.join(map(str, item)))
 
@@ -84,43 +99,42 @@ class Calculator(object):
     def __init__(self, table_for_calc):
         self.table_for_calc = table_for_calc
 
-    def calculating(self):
-        table_width = len(self.table_for_calc)
-        table_len = len(self.table_for_calc[0])
+    def calculating_price(self):
+        # table_width = len(self.table_for_calc)
+        # table_len = len(self.table_for_calc[0])
         total = 0
 
-        for row in range(table_width):
-            for col in range(table_len):
-                temp_instance = self.table_for_calc[row][col]
-                price = temp_instance.price
-                total += price
+        for x in self.table_for_calc:
+            total += x
+        # for row in range(table_width):
+        #     for col in range(table_len):
+        #         temp_instance = self.table_for_calc[row][col]
+        #         price = temp_instance.price
+        #         total += price
 
         return total
 
+# ************************************  User interface ********************************************
 
-alumin = Aluminium()
-linden = Linden()
-beech = Beech()
-steel = Steel()
-glass = Glass()
-hole = Hole()
-
-# ************************************  User interface *********************************************
-
-user_pattern = [[alumin, alumin, alumin, alumin, alumin],
-                [alumin, beech, glass, beech, alumin],
-                [alumin, glass, glass, glass, alumin],
-                [alumin, beech, glass, beech, alumin],
-                [alumin, hole, hole, hole, alumin],
-                [alumin, alumin, alumin, alumin, alumin]
+user_pattern = [[Aluminium, Aluminium, Aluminium, Aluminium, Aluminium],
+                [Aluminium, Beech, Glass, Beech, Aluminium],
+                [Aluminium, Glass, Glass, Glass, Aluminium],
+                [Aluminium, Beech, Glass, Beech, Aluminium],
+                [Aluminium, Hole, Hole, Hole, Aluminium],
+                [Aluminium, Aluminium, Aluminium, Aluminium, Aluminium]
                 ]
 
 # *************************************************************************************************
 
-Printer(user_pattern).printing()
+
+
+
+design = TableDesign(user_pattern)
+
+Printer(design).printing()
 
 # Calculating the price
 
-total_sum = Calculator(user_pattern).calculating()
+total_sum = Calculator(design.work_table).calculating_price()
 print
 print ("The total price of this table is: {0} lv.".format(total_sum))
