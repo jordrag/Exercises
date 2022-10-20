@@ -2,8 +2,8 @@
 class Material(object):  # Common materials class
 
     def __init__(self, price, color):
-        self.kind = color
-        self.strength = price
+        self.color = color
+        self.price = price
 
 
 class Linden(Material):  # Липа
