@@ -98,19 +98,22 @@ class Calculator(object):
 
     def __init__(self, table_for_calc):
         self.table_for_calc = table_for_calc
+        self.table_width = len(self.table_for_calc)
+        self.table_len = len(self.table_for_calc[0])
+        self.total_elements = self.table_width * self.table_len
 
     def calculating_price(self):
-        table_width = len(self.table_for_calc)
-        table_len = len(self.table_for_calc[0])
+
         total = 0
 
-        for row in range(table_width):
-            for col in range(table_len):
+        for row in range(self.table_width):
+            for col in range(self.table_len):
                 temp_instance = self.table_for_calc[row][col]
                 price = temp_instance.price
                 total += price
 
         return total
+
 
 # ************************************  User interface ********************************************
 
@@ -125,8 +128,6 @@ user_pattern = [[Aluminium, Aluminium, Aluminium, Aluminium, Aluminium],
 # *************************************************************************************************
 
 
-
-
 design = TableDesign(user_pattern)
 
 Printer(design).printing()
@@ -134,5 +135,8 @@ Printer(design).printing()
 # Calculating the price
 
 total_sum = Calculator(design.work_table).calculating_price()
+total_elements = Calculator(design.work_table).total_elements
 print
 print ("The total price of this table is: {0} lv.".format(total_sum))
+print
+print ("The total elements in this table are: {0} ".format(total_elements))
