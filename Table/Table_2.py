@@ -100,17 +100,15 @@ class Calculator(object):
         self.table_for_calc = table_for_calc
 
     def calculating_price(self):
-        # table_width = len(self.table_for_calc)
-        # table_len = len(self.table_for_calc[0])
+        table_width = len(self.table_for_calc)
+        table_len = len(self.table_for_calc[0])
         total = 0
 
-        for x in self.table_for_calc:
-            total += x
-        # for row in range(table_width):
-        #     for col in range(table_len):
-        #         temp_instance = self.table_for_calc[row][col]
-        #         price = temp_instance.price
-        #         total += price
+        for row in range(table_width):
+            for col in range(table_len):
+                temp_instance = self.table_for_calc[row][col]
+                price = temp_instance.price
+                total += price
 
         return total
 
