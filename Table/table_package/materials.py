@@ -2,71 +2,48 @@
 
 # *********************************** Start of data layer **********************************
 class Material(object):  # Common materials class
+    name = ""
+    price = 0
+    strength = 0
 
-    def __init__(self, price, color):
+    def __init__(self, color="Natural"):
         self.color = color
-        self.price = price
+
+    def __str__(self):
+        return self.name
 
 
 class Linden(Material):  # Липа
-    PRICE = 50
-
-    def __init__(self, price=PRICE, color="Natural"):
-        super(Linden, self).__init__(price, color)
-
-    def __str__(self):
-        return "Linden"
+    price = 50
+    name = "Linden"
 
 
 class Beech(Material):  # Бук
-    PRICE = 60
+    price = 50
+    name = "Beech"
 
-    def __init__(self, price=PRICE, color="Natural"):
-        super(Beech, self).__init__(price, color)
-
-    def __str__(self):
-        return "Beech"
 
 
 class Aluminium(Material):  # Алуминий
-    PRICE = 60
+    price = 60
+    name = "Alum"
 
-    def __init__(self, price=PRICE, color="Natural"):
-        super(Aluminium, self).__init__(price, color)
-
-    def __str__(self):
-        return "Alum"
 
 
 class Steel(Material):  # Стомана
-    PRICE = 80
-
-    def __init__(self, price=PRICE, color="Natural"):
-        super(Steel, self).__init__(price, color)
-
-    def __str__(self):
-        return "Steel"
+    price = 80
+    name = "Steel"
 
 
 class Glass(Material):  # Стъкло
-    PRICE = 35
-    COLOR = "Natural"
+    price = 50
+    name = "Glass"
 
-    def __init__(self, price=PRICE, color="Natural"):
-        super(Glass, self).__init__(price, color)
-
-    def __str__(self):
-        return "Glass"
 
 
 class Hole(Material):  # An empty space option
-    PRICE = 10
-
-    def __init__(self, price=PRICE, color="None"):
-        super(Hole, self).__init__(price, color)
-
-    def __str__(self):
-        return "    "
+    price = 10
+    name = "    "
 
 
 # ********************************* End of data layer ***********************************************

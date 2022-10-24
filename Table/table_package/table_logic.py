@@ -7,7 +7,6 @@ class TableDesign(object):
         self.table_width = len(self.table_for_design)
         self.table_len = len(self.table_for_design[0])
         self.designing_table()
-        self.designing_table_prices()
         self.table_price()
 
     def designing_table(self):
@@ -17,14 +16,6 @@ class TableDesign(object):
             for col in range(self.table_len):
                 temp_instance = self.table_for_design[row][col]()
                 self.work_table_names[row].append(temp_instance)
-
-    def designing_table_prices(self):
-
-        for row in range(self.table_width):
-            self.work_table_prices.append([])
-            for col in range(self.table_len):
-                temp_instance_price = self.table_for_design[row][col].PRICE
-                self.work_table_prices[row].append(temp_instance_price)
 
     def table_price(self):
         total = 0
