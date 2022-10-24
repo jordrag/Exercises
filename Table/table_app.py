@@ -17,9 +17,12 @@ user_pattern = [[Aluminium, Aluminium, Aluminium, Aluminium, Aluminium],
 design = TableDesign(user_pattern)
 print_price = TableDesign.table_price(design)
 
-Printer(design).printing()
-
+Printer(design.work_table_names).printing()
 print
+
+Printer(design.work_table_prices).printing()
+print
+
 print ("The total price of this table is: {0} lv.".format(print_price))
 
 # *************************************************************************************************
