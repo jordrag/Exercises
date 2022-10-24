@@ -43,7 +43,7 @@ class Glass(Material):  # Стъкло
 
 class Hole(Material):  # An empty space option
     price = 10
-    name = "    "
+    name = "     "
 
 
 # ********************************* End of data layer ***********************************************
