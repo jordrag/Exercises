@@ -1,15 +1,12 @@
 # coding=utf-8
-import exceptions
 
 from table_package.materials import *
 from table_package.table_logic import *
 from table_package.table_printer import *
-from table_package.exceptions import *
-
 
 # ************************************  User interface ********************************************
 
-user_pattern = [[Aluminium, Aluminium, Aluminium, Aluminium, Aluminium],
+user_pattern = [[None, Aluminium, Aluminium, Aluminium, Aluminium],
                 [Aluminium, Beech, Glass, Beech, Aluminium],
                 [Aluminium, Glass, Glass, Glass, Aluminium],
                 [Aluminium, Beech, Glass, Beech, Aluminium],
@@ -17,15 +14,28 @@ user_pattern = [[Aluminium, Aluminium, Aluminium, Aluminium, Aluminium],
                 [Aluminium, Aluminium, Aluminium, Aluminium, Aluminium]
                 ]
 
-user_input = str(input("Въведи какво желаеш да се разпечата: "))
-exceptions.main()
+while True:
+    try:
+        user_input = str(input("Въведи какво желаеш да се разпечата: "))
 
-design = TableDesign(user_pattern)
-print_price = TableDesign.table_price(design)
+        design = TableDesign(user_pattern)
+        print_price = TableDesign.table_price(design)
 
-Printer(design.work_table_names).printing(user_input)
-print
+        Printer(design.work_table_names).printing(user_input)
+        print
 
-print ("The total price of this table is: {0} lv.".format(print_price))
+        print ("The total price of this table is: {0} lv.".format(print_price))
+
+    except TableError:
+        print("ERROR during table construction")
+
+    except Exception :
+        print ("This parameter is not supported !")
+
+    # except Exception:
+    #     pass
+
+    else:
+        break
 
 # *************************************************************************************************

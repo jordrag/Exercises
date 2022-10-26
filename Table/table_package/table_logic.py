@@ -1,6 +1,4 @@
 # ********************************* Start of business logic *****************************************
-
-from table_package.exceptions import *
 class TableDesign(object):
     def __init__(self, user_table):
         self.table_for_design = user_table
@@ -12,12 +10,16 @@ class TableDesign(object):
         self.table_price()
 
     def designing_table(self):
+        try:
+            for row in range(self.table_width):
+                self.work_table_names.append([])
+                for col in range(self.table_len):
+                    temp_instance = self.table_for_design[row][col]()
+                    self.work_table_names[row].append(temp_instance)
 
-        for row in range(self.table_width):
-            self.work_table_names.append([])
-            for col in range(self.table_len):
-                temp_instance = self.table_for_design[row][col]()
-                self.work_table_names[row].append(temp_instance)
+        except Exception as err:
+            # print("ERROR during table construction")
+            raise TableError(err)
 
     def table_price(self):
         total = 0
@@ -29,5 +31,8 @@ class TableDesign(object):
                 total += price
         return total
 
+
+class TableError(Exception):
+    pass
 
 # ********************************* End of business logic *****************************************

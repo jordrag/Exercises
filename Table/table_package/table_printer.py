@@ -1,6 +1,4 @@
 # ********************************* Start of presentation layer ********************************************
-
-from table_package.exceptions import *
 class Printer(object):  # Printing the ready table on the screen
     def __init__(self, table_for_print, param_for_print=0):
         self.table = table_for_print
