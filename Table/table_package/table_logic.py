@@ -34,4 +34,4 @@ class TableDesign(object):
 class TableError(Exception):            # Custom error class
     pass
 
-# ********************************* End of business logic *****************************************
+# ********************************* End of business logic ******************************************

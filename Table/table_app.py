@@ -4,7 +4,7 @@ from table_package.materials import *
 from table_package.table_logic import *
 from table_package.table_printer import *
 
-# ************************************  User's table pattern definition ********************************************
+# *************************  User's table pattern definition **************************************
 
 user_pattern = [[Aluminium, Aluminium, Aluminium, Aluminium, Aluminium],
                 [Aluminium, Beech, Glass, Beech, Aluminium],
