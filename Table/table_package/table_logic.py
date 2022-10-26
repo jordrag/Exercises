@@ -1,4 +1,6 @@
 # ********************************* Start of business logic *****************************************
+
+from table_package.exceptions import *
 class TableDesign(object):
     def __init__(self, user_table):
         self.table_for_design = user_table

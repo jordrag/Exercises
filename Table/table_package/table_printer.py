@@ -1,5 +1,6 @@
 # ********************************* Start of presentation layer ********************************************
 
+from table_package.exceptions import *
 class Printer(object):  # Printing the ready table on the screen
     def __init__(self, table_for_print, param_for_print=0):
         self.table = table_for_print
@@ -12,6 +13,7 @@ class Printer(object):  # Printing the ready table on the screen
             tmp = ""
             for col in row:
                 tmp += str(getattr(col, user_input)) + " "
+                # tmp += str(col.__dict__["color"]) + " "
             result.append(tmp)
         for line in result: # Printing the new matrix with data collected in it
             print (line)

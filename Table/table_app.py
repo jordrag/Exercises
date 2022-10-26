@@ -1,8 +1,11 @@
 # coding=utf-8
+import exceptions
 
 from table_package.materials import *
 from table_package.table_logic import *
 from table_package.table_printer import *
+from table_package.exceptions import *
+
 
 # ************************************  User interface ********************************************
 
@@ -15,6 +18,7 @@ user_pattern = [[Aluminium, Aluminium, Aluminium, Aluminium, Aluminium],
                 ]
 
 user_input = str(input("Въведи какво желаеш да се разпечата: "))
+exceptions.main()
 
 design = TableDesign(user_pattern)
 print_price = TableDesign.table_price(design)
