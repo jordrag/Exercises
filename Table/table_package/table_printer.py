@@ -15,6 +15,6 @@ class Printer(object):  # Printing the ready table on the screen
             result.append(tmp)
         for line in result: # Printing the new matrix with data collected in it
             print (line)
-
+        print
 
 # ********************************* End of presentation layer ********************************************

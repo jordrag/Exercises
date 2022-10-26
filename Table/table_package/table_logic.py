@@ -9,7 +9,7 @@ class TableDesign(object):
         self.designing_table()
         self.table_price()
 
-    def designing_table(self):
+    def designing_table(self):          # Transforming user's table pattern to working matrix with instances
         try:
             for row in range(self.table_width):
                 self.work_table_names.append([])
@@ -18,10 +18,9 @@ class TableDesign(object):
                     self.work_table_names[row].append(temp_instance)
 
         except Exception as err:
-            # print("ERROR during table construction")
             raise TableError(err)
 
-    def table_price(self):
+    def table_price(self):              # Calculating the table price
         total = 0
 
         for row in range(self.table_width):
@@ -32,7 +31,7 @@ class TableDesign(object):
         return total
 
 
-class TableError(Exception):
+class TableError(Exception):            # Custom error class
     pass
 
 # ********************************* End of business logic *****************************************
