@@ -1,4 +1,5 @@
-## _Table design diagram_
+## _Table design application_
 
-It's a basic UML diagram for my simple "Table design" app.
+It's a simple "Table design" app showing some basic methods and principles to work with Python OOP.  
 
+<img src="C:\Users\ydragnev\Downloads\Table_design_UML.drawio.png">
