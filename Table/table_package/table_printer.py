@@ -17,4 +17,4 @@ class Printer(object):  # Printing the ready table on the screen
             print (line)
         print
 
-# ********************************* End of presentation layer ********************************************
+# ********************************* End of presentation layer *********************************************
