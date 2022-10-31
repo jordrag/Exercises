@@ -4,29 +4,27 @@ class TableLogic(object):
         self.template = template
         self.work_table_names = []
         self.work_table_prices = []
-        self.table_width = len(self.template)
-        self.table_len = len(self.template[0])
         self.designing_table()
         self.table_price()
 
-    def designing_table(self):          # Transforming user's table pattern to working matrix with instances
+    def designing_table(self):
+        row_counter = 0             # Transforming user's table pattern to working matrix with instances
         try:
-            for row in range(self.table_width):
+            for row in self.template:
                 self.work_table_names.append([])
-                for col in range(self.table_len):
-                    temp_instance = self.template[row][col]()
-                    self.work_table_names[row].append(temp_instance)
-
+                for col in row:
+                    temp_instance = col()
+                    self.work_table_names[row_counter].append(temp_instance)
+                row_counter += 1
         except Exception as err:
             raise TableError(err)
 
     def table_price(self):              # Calculating the table price
         total = 0
 
-        for row in range(self.table_width):
-            for col in range(self.table_len):
-                temp_instance = self.work_table_names[row][col]
-                price = temp_instance.price
+        for row in self.template:
+            for col in row:
+                price = col.price
                 total += price
         return total
 
