@@ -1,6 +1,6 @@
 # coding=utf-8
 
-from table_package.materials import *
+from table_package.table_material import *
 from table_package.table_logic import *
 from table_package.table_printer import *
 
@@ -23,10 +23,10 @@ while True:
 
 # *********************** Defining what to print **************************************************
 
-        design = TableDesign(user_pattern)
-        print_price = TableDesign.table_price(design)
+        design = TableLogic(user_pattern)
+        print_price = TableLogic.table_price(design)
 
-        Printer(design.work_table_names).printing(user_input)
+        TablePrinter(design.work_table_names).printing(user_input)
         
         print ("The total price of this table is: {0} lv.".format(print_price))
 

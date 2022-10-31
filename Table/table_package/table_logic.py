@@ -1,11 +1,11 @@
 # ********************************* Start of business logic *****************************************
-class TableDesign(object):
-    def __init__(self, user_table):
-        self.table_for_design = user_table
+class TableLogic(object):
+    def __init__(self, template):
+        self.template = template
         self.work_table_names = []
         self.work_table_prices = []
-        self.table_width = len(self.table_for_design)
-        self.table_len = len(self.table_for_design[0])
+        self.table_width = len(self.template)
+        self.table_len = len(self.template[0])
         self.designing_table()
         self.table_price()
 
@@ -14,7 +14,7 @@ class TableDesign(object):
             for row in range(self.table_width):
                 self.work_table_names.append([])
                 for col in range(self.table_len):
-                    temp_instance = self.table_for_design[row][col]()
+                    temp_instance = self.template[row][col]()
                     self.work_table_names[row].append(temp_instance)
 
         except Exception as err:
