@@ -23,12 +23,15 @@ while True:
 
 # *********************** Defining what to print **************************************************
 
-        design = TableLogic.from_list(user_pattern)
-        # print_price = design.price
+        # design = TableLogic.from_list(user_pattern)
+        # print_price = TableLogic(design).price
 
-        TablePrinter(design.template).printing(user_input)
+        design = TableLogic(user_pattern).table
+        print_price = TableLogic(design).price
+
+        TablePrinter(design).printing(user_input)
         
-        print ("The total price of this table is: {0} lv.".format(design.price))
+        print ("The total price of this table is: {0} lv.".format(print_price))
 
 # ********************** Diff type of errors raise ************************************************
 

@@ -5,7 +5,15 @@ class TableLogic(object):
 
     @classmethod
     # Transforming user's table pattern to working matrix with instances
-    def from_list(cls, template):
+    def from_list(cls, user_list):
+        return cls.logic(user_list)
+
+    @property
+    def table(self):
+        return self.logic(self.template)
+
+    @staticmethod
+    def logic(template):
         instance_matrix = []
         row_counter = 0
         try:
@@ -15,7 +23,7 @@ class TableLogic(object):
                     temp_instance = col()
                     instance_matrix[row_counter].append(temp_instance)
                 row_counter += 1
-            return cls(instance_matrix)
+            return instance_matrix
         except Exception as err:
             raise TableError(err)
 
@@ -30,8 +38,8 @@ class TableLogic(object):
         return total
 
 
+# Custom error class
 class TableError(Exception):
-    # Custom error class
     pass
 
 # ********************************* End of business logic ******************************************
