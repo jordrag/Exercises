@@ -4,7 +4,6 @@ class TableLogic(object):
         self.template = template
 
     @classmethod
-    # Transforming user's table pattern to working matrix with instances
     def from_list(cls, user_list):
         return cls.logic(user_list)
 
@@ -13,6 +12,7 @@ class TableLogic(object):
         return self.logic(self.template)
 
     @staticmethod
+    # Transforming user's table pattern to working matrix with instances
     def logic(template):
         instance_matrix = []
         row_counter = 0
