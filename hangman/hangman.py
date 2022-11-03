@@ -48,7 +48,7 @@ class UserInput(object):
         player = StartingData(username, category, difficulty)
 
 
-# Defining the exact word for this game
+# Defining the exact word for this game and some other words for the same level, if the player wants
 class WordMake(object):
     lett_list = []
 
@@ -57,7 +57,7 @@ class WordMake(object):
 
     @property
     def random_word(self):
-        rnd_number = random.randrange(0,len(self.game_list))
+        rnd_number = random.randrange(0, len(self.game_list))
         the_word = self.game_list.pop(rnd_number)
         return the_word
 
@@ -66,17 +66,26 @@ class WordMake(object):
             self.lett_list.append(lett)
 
 
+# The game logic
+class GamePlay:
+    ''' Loop for the game
+        Compare the user's letter to the letters from the word
+        Tracing for user commands (stop game, whole word guess, hint)
+        Calculating earned points
+    '''
 
 
-
+# Printing info on the screen (the bad and the good results)
 class Printer(object):
-    print WordMake.random_word
+   pass
 
 
+# Working on the final result, saving exit data to the database
 class FinalResult(object):
     pass
 
 
+# Commands through the game for exit, hints, whole word suggestion, etc..
 class Commands(object):
     pass
 
