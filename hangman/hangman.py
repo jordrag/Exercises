@@ -49,23 +49,19 @@ class UserInput(object):
     player = StartingData(username, category, difficulty)
 
 
-# Defining the exact word for this game and some other words for the same level, if the player wants
-class WordMake(object):
+# Defining the exact word for this game and a new list of words for the same level, if the player wants
+class WordMakeUp(object):
     def __init__(self, list):
         self.words_list = list
 
     @property
     def random_word(self):
+        letters_list = []
         rnd_number = random.randrange(0, len(self.words_list))
         the_word = self.words_list.pop(rnd_number)
-        return the_word
-
-    @property
-    def word_letters(self):
-        letters_list = []
-        for lett in self.random_word:
+        for lett in the_word:
             letters_list.append(lett)
-        return letters_list
+        return {the_word: letters_list, "words_list": self.words_list}
 
 
 # The game logic
@@ -80,8 +76,10 @@ class GamePlay:
 
 # Printing info on the screen (the bad and the good results)
 class Printer(object):
-    print WordMake(UserInput.player.game_list).random_word
-    print WordMake(UserInput.player.game_list).word_letters
+    print UserInput.player.username
+    print UserInput.player.hil_points
+    print WordMakeUp(UserInput.player.game_list).random_word
+
 
 # Working on the final result, saving exit data to the database
 class FinalResult(object):
