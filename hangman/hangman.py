@@ -14,12 +14,13 @@ class Database(object):
 
 
 # Taking specific data from database according to the user entry
-class StartingData(object):
+class StartingDataFactory(object):
     def __init__(self, name, cat, diff):
         self.username = name
         self.difficulty = diff
         self.category = cat
 
+    # Making specific list according user's input data for category and difficulty level
     @property
     def game_list(self):
         temp_list = []
@@ -31,6 +32,7 @@ class StartingData(object):
                 temp_list.append(a)
         return temp_list
 
+    # Taking user's profile info from database, if it doesn't exist make new user with hil_points = 0
     @property
     def hil_points(self):
         if self.username not in Database.usernames_list:
@@ -46,7 +48,7 @@ class UserInput(object):
     difficulty = str(input("Choose difficulty level (easy, medium, hard): "))
     category = str(input("Choose category of words (animals, cars, cities): "))
 
-    player = StartingData(username, category, difficulty)
+    player = StartingDataFactory(username, category, difficulty)
 
 
 # Defining the exact word for this game and a new list of words for the same level, if the player wants
@@ -76,17 +78,43 @@ class GamePlay:
 
 # Printing info on the screen (the bad and the good results)
 class Printer(object):
-    print UserInput.player.username
-    print UserInput.player.hil_points
-    print WordMakeUp(UserInput.player.game_list).random_word
+    # print UserInput.player.username
+    # print UserInput.player.hil_points
+    # print WordMakeUp(UserInput.player.game_list).random_word
+    def empty_word(self):
+        pass
+    def hangman(self):
+        pass
+
+    def guessed_letters(self):
+        pass
+
+    def not_guessed_letters(self):
+        pass
+
+    def result(self):
+        pass
 
 
-# Working on the final result, saving exit data to the database
-class FinalResult(object):
-    pass
+# Working with files, loading or saving data to the database
+class FileOperations(object):
+
+    def loading_data(self):
+        pass
+
+    def saving_data(self):
+        pass
 
 
 # Commands through the game for exit, hints, whole word suggestion, etc..
 class Commands(object):
-    pass
+    def stop_game(self):
+        pass
+
+    def hint(self):
+        pass
+
+    def whole_word(self):
+        pass
+
 
