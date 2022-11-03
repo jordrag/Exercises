@@ -38,19 +38,6 @@ class StartingData(object):
 
         return Database.usernames_list[self.username]
 
-    @property
-    def random_word(self):
-        rnd_number = random.randrange(0, len(self.game_list))
-        the_word = self.game_list.pop(rnd_number)
-        return the_word
-
-    @property
-    def word_letters(self):
-        letters = []
-        for lett in self.random_word:
-            letters.append(lett)
-        return letters
-
 
 # User interface
 class UserInput(object):
@@ -65,20 +52,21 @@ class UserInput(object):
 # Defining the exact word for this game and some other words for the same level, if the player wants
 class WordMake(object):
     def __init__(self, list):
-        self.list = list
+        self.words_list = list
 
     @property
     def random_word(self):
-        rnd_number = random.randrange(0, len(self.list))
-        the_word = self.list.pop(rnd_number)
+        rnd_number = random.randrange(0, len(self.words_list))
+        the_word = self.words_list.pop(rnd_number)
         return the_word
 
     @property
     def word_letters(self):
-        lett_list = []
+        letters_list = []
         for lett in self.random_word:
-            lett_list.append(lett)
-        return lett_list
+            letters_list.append(lett)
+        return letters_list
+
 
 # The game logic
 class GamePlay:
