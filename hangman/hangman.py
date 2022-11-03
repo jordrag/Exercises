@@ -38,33 +38,47 @@ class StartingData(object):
 
         return Database.usernames_list[self.username]
 
-
-# User interface
-class UserInput(object):
-    while True:
-        username = str(input("Enter username: "))
-        difficulty = str(input("Choose difficulty level (easy, medium, hard): "))
-        category = str(input("Choose category of words (animals, cars, cities): "))
-        player = StartingData(username, category, difficulty)
-
-
-# Defining the exact word for this game and some other words for the same level, if the player wants
-class WordMake(object):
-    lett_list = []
-
-    def __init__(self):
-        self.game_list = UserInput.player.game_list
-
     @property
     def random_word(self):
         rnd_number = random.randrange(0, len(self.game_list))
         the_word = self.game_list.pop(rnd_number)
         return the_word
 
+    @property
     def word_letters(self):
+        letters = []
         for lett in self.random_word:
-            self.lett_list.append(lett)
+            letters.append(lett)
+        return letters
 
+
+# User interface
+class UserInput(object):
+
+    username = str(input("Enter username: "))
+    difficulty = str(input("Choose difficulty level (easy, medium, hard): "))
+    category = str(input("Choose category of words (animals, cars, cities): "))
+
+    player = StartingData(username, category, difficulty)
+
+
+# Defining the exact word for this game and some other words for the same level, if the player wants
+class WordMake(object):
+    def __init__(self, list):
+        self.list = list
+
+    @property
+    def random_word(self):
+        rnd_number = random.randrange(0, len(self.list))
+        the_word = self.list.pop(rnd_number)
+        return the_word
+
+    @property
+    def word_letters(self):
+        lett_list = []
+        for lett in self.random_word:
+            lett_list.append(lett)
+        return lett_list
 
 # The game logic
 class GamePlay:
@@ -72,13 +86,14 @@ class GamePlay:
         Compare the user's letter to the letters from the word
         Tracing for user commands (stop game, whole word guess, hint)
         Calculating earned points
+        Error checking
     '''
 
 
 # Printing info on the screen (the bad and the good results)
 class Printer(object):
-   pass
-
+    print WordMake(UserInput.player.game_list).random_word
+    print WordMake(UserInput.player.game_list).word_letters
 
 # Working on the final result, saving exit data to the database
 class FinalResult(object):
@@ -88,6 +103,4 @@ class FinalResult(object):
 # Commands through the game for exit, hints, whole word suggestion, etc..
 class Commands(object):
     pass
-
-
 
