@@ -89,10 +89,10 @@ class Printer(object):
         self.value = value
 
     def empty_word(self):
-        print
+        print ()
         for i in self.value:
             print(" _ "),
-        print
+        print ()
 
     def in_game_print(self):
         print(" ".join(self.value))
@@ -107,10 +107,10 @@ class Printer(object):
         pass
 
     def win_result(self):
-        print("{0}, you won !").format(self.value)
+        print(f"{self.value}, you won !")
 
     def lost_result(self):
-            print("Game over! {0}, you've lost !").format(self.value)
+        print(f"Game over! {self.value}, you've lost !")
 
 
 # The game logic
