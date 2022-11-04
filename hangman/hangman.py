@@ -93,8 +93,11 @@ class Printer(object):
     def not_guessed_letters(self):
         pass
 
-    def result(self):
-        pass
+    def win_result(self):
+        print("{0}, you won !").format(self.value)
+
+    def lost_result(self):
+            print("Game over! {0}, you've lost !").format(self.value)
 
 
 # The game logic
@@ -107,10 +110,10 @@ class GamePlay:
     '''
 
     entry_data = WordMakeUp(UserInput.player.game_list).random_word
-    points = 0
+    entry_word = entry_data["the_word"]
+    player_name = UserInput.player.username
     game_word = []
     fail_count = 1
-    entry_word = entry_data["the_word"]
 
     Printer(entry_data).empty_word()
 
@@ -121,19 +124,19 @@ class GamePlay:
             for i in self.entry_word:
                 if self.entry_word[i] == letter:
                     self.game_word[i] = letter
-                    self.points += 1
+                    guessed_right += 1
 
-            if self.points != 0:
+            if guessed_right != 0:
                 Printer(self.game_word).in_game_print()
                 if "_" not in self.game_word:
-                    print("You won!")
+                    Printer(self.player_name).win_result()
                     break
-            # else:
-            #     Printer(self.fail_count).hangman()
-            #     self.fail_count += 1
-            #     if self.fail_count == len():
-            #         print("Game over! You lose!")
-            #         break
+            else:
+                Printer(self.fail_count).hangman()
+                self.fail_count += 1
+                if self.fail_count == len(self.entry_word):
+                    print("Game over! You lose!")
+                    break
 
 
 
@@ -159,4 +162,5 @@ class Commands(object):
     def whole_word(self):
         pass
 
-
+class UserOutput(object):
+    pass
