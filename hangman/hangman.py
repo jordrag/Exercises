@@ -63,7 +63,38 @@ class WordMakeUp(object):
         the_word = self.words_list.pop(rnd_number)
         for lett in the_word:
             letters_list.append(lett)
-        return {the_word: letters_list, "words_list": self.words_list}
+        return {"the_word": the_word, "letters": letters_list, "words_list": self.words_list}
+
+
+# Printing info on the screen (the bad and the good results)
+class Printer(object):
+    # print UserInput.player.username
+    # print UserInput.player.hil_points
+    # print WordMakeUp(UserInput.player.game_list).random_word
+
+    def __init__(self, value):
+        self.value = value
+
+    def empty_word(self):
+        print
+        for i in self.value:
+            print(" _ "),
+        print
+
+    def in_game_print(self):
+        print(" ".join(self.value))
+
+    def hangman(self):
+        print("*" * self.value)
+
+    def guessed_letters(self):
+        pass
+
+    def not_guessed_letters(self):
+        pass
+
+    def result(self):
+        pass
 
 
 # The game logic
@@ -75,25 +106,36 @@ class GamePlay:
         Error checking
     '''
 
+    entry_data = WordMakeUp(UserInput.player.game_list).random_word
+    points = 0
+    game_word = []
+    fail_count = 1
+    entry_word = entry_data["the_word"]
 
-# Printing info on the screen (the bad and the good results)
-class Printer(object):
-    # print UserInput.player.username
-    # print UserInput.player.hil_points
-    # print WordMakeUp(UserInput.player.game_list).random_word
-    def empty_word(self):
-        pass
-    def hangman(self):
-        pass
+    Printer(entry_data).empty_word()
 
-    def guessed_letters(self):
-        pass
+    def gaming(self):
+        while True:
+            letter = str(input("Ask a letter from the word: "))
+            guessed_right = 0
+            for i in self.entry_word:
+                if self.entry_word[i] == letter:
+                    self.game_word[i] = letter
+                    self.points += 1
 
-    def not_guessed_letters(self):
-        pass
+            if self.points != 0:
+                Printer(self.game_word).in_game_print()
+                if "_" not in self.game_word:
+                    print("You won!")
+                    break
+            # else:
+            #     Printer(self.fail_count).hangman()
+            #     self.fail_count += 1
+            #     if self.fail_count == len():
+            #         print("Game over! You lose!")
+            #         break
 
-    def result(self):
-        pass
+
 
 
 # Working with files, loading or saving data to the database
