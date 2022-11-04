@@ -40,6 +40,19 @@ class StartingDataFactory(object):
 
         return Database.usernames_list[self.username]
 
+    class WordMakeUp(object):
+        def __init__(self, list):
+            self.words_list = list
+
+        @property
+        def random_word(self):
+            letters_list = []
+            rnd_number = random.randrange(0, len(self.words_list))
+            the_word = self.words_list.pop(rnd_number)
+            for lett in the_word:
+                letters_list.append(lett)
+            return {"the_word": the_word, "letters": letters_list, "words_list": self.words_list}
+
 
 # User interface
 class UserInput(object):
@@ -52,18 +65,18 @@ class UserInput(object):
 
 
 # Defining the exact word for this game and a new list of words for the same level, if the player wants
-class WordMakeUp(object):
-    def __init__(self, list):
-        self.words_list = list
-
-    @property
-    def random_word(self):
-        letters_list = []
-        rnd_number = random.randrange(0, len(self.words_list))
-        the_word = self.words_list.pop(rnd_number)
-        for lett in the_word:
-            letters_list.append(lett)
-        return {"the_word": the_word, "letters": letters_list, "words_list": self.words_list}
+# class WordMakeUp(object):
+#     def __init__(self, list):
+#         self.words_list = list
+#
+#     @property
+#     def random_word(self):
+#         letters_list = []
+#         rnd_number = random.randrange(0, len(self.words_list))
+#         the_word = self.words_list.pop(rnd_number)
+#         for lett in the_word:
+#             letters_list.append(lett)
+#         return {"the_word": the_word, "letters": letters_list, "words_list": self.words_list}
 
 
 # Printing info on the screen (the bad and the good results)
@@ -109,13 +122,13 @@ class GamePlay:
         Error checking
     '''
 
-    entry_data = WordMakeUp(UserInput.player.game_list).random_word
+    entry_data = StartingDataFactory.WordMakeUp(UserInput.player.game_list).random_word
     entry_word = entry_data["the_word"]
     player_name = UserInput.player.username
     game_word = []
     fail_count = 1
 
-    Printer(entry_data).empty_word()
+    Printer(entry_data["the_word"]).empty_word()
 
     def gaming(self):
         while True:
