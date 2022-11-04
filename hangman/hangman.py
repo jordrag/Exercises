@@ -1,7 +1,7 @@
 import random
 
 
-# The database for users, categories and levels in the game
+# **************** The database for users, categories and levels in the game **********************************
 class Database(object):
     usernames_list = {"Ace": 5, "Base": 10, "Case": 15}
 
@@ -12,16 +12,23 @@ class Database(object):
 
     levels = {"easy": [3, 5], "medium": [6, 9], "hard": [9, 30]}
 
+# ************************************************************************************************************
 
-# Taking specific data from database according to the user entry
-class StartingDataFactory(object):
+
+# ***************************************** The game logic ***************************************************
+class Hangman(object):
     def __init__(self, name, cat, diff):
         self.username = name
         self.difficulty = diff
         self.category = cat
+        self.game_list = self.game_list()
+        self.hil_points = self.hil_points()
+        self.starting_data = self.starting_data()
 
-    # Making specific list according user's input data for category and difficulty level
-    @property
+    # player = GamePlay(username, category, difficulty)
+
+# Making specific list according user's input data for category and difficulty level
+#     @staticmethod
     def game_list(self):
         temp_list = []
         min_length = Database.levels[self.difficulty][0]
@@ -33,53 +40,79 @@ class StartingDataFactory(object):
         return temp_list
 
     # Taking user's profile info from database, if it doesn't exist make new user with hil_points = 0
-    @property
+
     def hil_points(self):
         if self.username not in Database.usernames_list:
             Database.usernames_list[self.username] = 0
 
         return Database.usernames_list[self.username]
 
-    class WordMakeUp(object):
-        def __init__(self, list):
-            self.words_list = list
-
-        @property
-        def random_word(self):
-            letters_list = []
-            rnd_number = random.randrange(0, len(self.words_list))
-            the_word = self.words_list.pop(rnd_number)
-            for lett in the_word:
-                letters_list.append(lett)
-            return {"the_word": the_word, "letters": letters_list, "words_list": self.words_list}
+    # @classmethod
+    def starting_data(self):
+        letters_list = []
+        rnd_number = random.randrange(0, len(self.game_list))
+        the_word = self.game_list.pop(rnd_number)
+        for lett in the_word:
+            letters_list.append(lett)
+        return {"the_word": the_word, "letters": letters_list, "words_list": self.game_list}
 
 
-# User interface
-class UserInput(object):
+    # entry_data = StartingDataFactory.WordMakeUp(UserInput.player.game_list).random_word
+    # entry_word = starting_data["the_word"]
+    # user_word = []
+    # fail_count = 1
+    #
+    # # Printer(entry_data["the_word"]).empty_word()
+    #
+    # def gaming(self):
+    #     while True:
+    #         letter = str(input("Ask a letter from the word: "))
+    #         guessed_right = 0
+    #         for i in self.entry_word:
+    #             if self.entry_word[i] == letter:
+    #                 self.user_word[i] = letter
+    #                 guessed_right += 1
+    #
+    #         if guessed_right != 0:
+    #             Printer(self.user_word).in_game_print()
+    #             if "_" not in self.user_word:
+    #                 Printer(self.username).win_result()
+    #                 break
+    #         else:
+    #             Printer(self.fail_count).hangman()
+    #             self.fail_count += 1
+    #             if self.fail_count == len(self.entry_word):
+    #                 print("Game over! You lose!")
+    #                 break
 
-    username = str(input("Enter username: "))
-    difficulty = str(input("Choose difficulty level (easy, medium, hard): "))
-    category = str(input("Choose category of words (animals, cars, cities): "))
 
-    player = StartingDataFactory(username, category, difficulty)
+# Working with files, loading or saving data to the database
+class FileOperations(object):
 
+    def loading_data(self):
+        pass
 
-# Defining the exact word for this game and a new list of words for the same level, if the player wants
-# class WordMakeUp(object):
-#     def __init__(self, list):
-#         self.words_list = list
-#
-#     @property
-#     def random_word(self):
-#         letters_list = []
-#         rnd_number = random.randrange(0, len(self.words_list))
-#         the_word = self.words_list.pop(rnd_number)
-#         for lett in the_word:
-#             letters_list.append(lett)
-#         return {"the_word": the_word, "letters": letters_list, "words_list": self.words_list}
+    def saving_data(self):
+        pass
 
 
-# Printing info on the screen (the bad and the good results)
+# Commands through the game for exit, hints, whole word suggestion, etc..
+class Commands(object):
+    def stop_game(self):
+        pass
+
+    def hint(self):
+        pass
+
+    def whole_word(self):
+        pass
+
+class UserOutput(object):
+    pass
+
+# *************************************************************************************************************
+
+# ********************* Printing info on the screen (the bad and the good results) ****************************
 class Printer(object):
     # print UserInput.player.username
     # print UserInput.player.hil_points
@@ -112,68 +145,19 @@ class Printer(object):
     def lost_result(self):
         print(f"Game over! {self.value}, you've lost !")
 
-
-# The game logic
-class GamePlay:
-    ''' Loop for the game
-        Compare the user's letter to the letters from the word
-        Tracing for user commands (stop game, whole word guess, hint)
-        Calculating earned points
-        Error checking
-    '''
-
-    entry_data = StartingDataFactory.WordMakeUp(UserInput.player.game_list).random_word
-    entry_word = entry_data["the_word"]
-    player_name = UserInput.player.username
-    game_word = []
-    fail_count = 1
-
-    Printer(entry_data["the_word"]).empty_word()
-
-    def gaming(self):
-        while True:
-            letter = str(input("Ask a letter from the word: "))
-            guessed_right = 0
-            for i in self.entry_word:
-                if self.entry_word[i] == letter:
-                    self.game_word[i] = letter
-                    guessed_right += 1
-
-            if guessed_right != 0:
-                Printer(self.game_word).in_game_print()
-                if "_" not in self.game_word:
-                    Printer(self.player_name).win_result()
-                    break
-            else:
-                Printer(self.fail_count).hangman()
-                self.fail_count += 1
-                if self.fail_count == len(self.entry_word):
-                    print("Game over! You lose!")
-                    break
+# ********************************************************************************************************
 
 
+# ************************************** User interface **************************************************
 
+# User interface
+class UserInput(object):
 
-# Working with files, loading or saving data to the database
-class FileOperations(object):
+    username = str(input("Enter username: "))
+    difficulty = str(input("Choose difficulty level (easy, medium, hard): "))
+    category = str(input("Choose category of words (animals, cars, cities): "))
 
-    def loading_data(self):
-        pass
+    player = Hangman(username, category, difficulty)
+    print(player.starting_data)
 
-    def saving_data(self):
-        pass
-
-
-# Commands through the game for exit, hints, whole word suggestion, etc..
-class Commands(object):
-    def stop_game(self):
-        pass
-
-    def hint(self):
-        pass
-
-    def whole_word(self):
-        pass
-
-class UserOutput(object):
-    pass
+# *********************************************************************************************************
