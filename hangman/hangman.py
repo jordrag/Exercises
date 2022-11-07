@@ -1,4 +1,6 @@
 import random
+from abc import ABCMeta, abstractmethod
+from six import with_metaclass
 
 
 # **************** The database for users, categories and levels in the game **********************************
@@ -12,11 +14,28 @@ class Database(object):
 
     levels = {"easy": [3, 5], "medium": [6, 9], "hard": [9, 30]}
 
+
 # ************************************************************************************************************
 
 
 # ***************************************** The game logic ***************************************************
-class Hangman(object):
+
+class Hangman(with_metaclass(ABCMeta)):
+
+    @abstractmethod
+    def game_list(self):
+        pass
+
+    @abstractmethod
+    def hil_points(self):
+        pass
+
+    @abstractmethod
+    def starting_data(self):
+        pass
+
+
+class HangmanOne(Hangman):
     def __init__(self, name, cat, diff):
         self.username = name
         self.difficulty = diff
@@ -29,7 +48,7 @@ class Hangman(object):
 
     # player = GamePlay(username, category, difficulty)
 
-# Making specific list according user's input data for category and difficulty level
+    # Making specific list according user's input data for category and difficulty level
 
     def game_list(self):
         temp_list = []
@@ -65,6 +84,10 @@ class Hangman(object):
         while True:
             letter = str(input("Ask a letter from the word: "))
             guessed_right = 0
+            if letter == "/":
+                command = input("Choose command (1.Hint, 2.Stop game, 3.If you wanna guess the whole word !")
+                Commands(command)
+
             for i in range(len(self.the_word)):
                 if self.the_word[i] == letter:
                     self.user_word[i] = letter
@@ -78,7 +101,7 @@ class Hangman(object):
             else:
                 Printer(fail_count).hangman()
                 fail_count += 1
-                if fail_count == len(self.the_word):
+                if fail_count == len(self.the_word) + 1:
                     print("Game over! You lose!")
                     break
 
@@ -95,6 +118,9 @@ class FileOperations(object):
 
 # Commands through the game for exit, hints, whole word suggestion, etc..
 class Commands(object):
+    def __init__(self, value):
+        self.value = value
+
     def stop_game(self):
         pass
 
@@ -104,8 +130,10 @@ class Commands(object):
     def whole_word(self):
         pass
 
+
 class UserOutput(object):
     pass
+
 
 # *************************************************************************************************************
 
@@ -119,10 +147,10 @@ class Printer(object):
         self.value = value
 
     def empty_word(self):
-        print ()
+        print()
         for i in self.value:
             print(" _ ", end="")
-        print ()
+        print()
 
     def in_game_print(self):
         print(" ".join(self.value))
@@ -142,6 +170,7 @@ class Printer(object):
     def lost_result(self):
         print(f"Game over! {self.value}, you've lost !")
 
+
 # ********************************************************************************************************
 
 
@@ -149,12 +178,11 @@ class Printer(object):
 
 # User interface
 class UserInput(object):
-
     username = str(input("Enter username: "))
     difficulty = str(input("Choose difficulty level (easy, medium, hard): "))
     category = str(input("Choose category of words (animals, cars, cities): "))
 
-    player = Hangman(username, category, difficulty)
+    player = HangmanOne(username, category, difficulty)
     player.gaming()
 
 # *********************************************************************************************************
