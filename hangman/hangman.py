@@ -24,11 +24,13 @@ class Hangman(object):
         self.game_list = self.game_list()
         self.hil_points = self.hil_points()
         self.starting_data = self.starting_data()
+        self.the_word = self.starting_data["the_word"]
+        self.user_word = self.starting_data["user_word"]
 
     # player = GamePlay(username, category, difficulty)
 
 # Making specific list according user's input data for category and difficulty level
-#     @staticmethod
+
     def game_list(self):
         temp_list = []
         min_length = Database.levels[self.difficulty][0]
@@ -47,43 +49,38 @@ class Hangman(object):
 
         return Database.usernames_list[self.username]
 
-    # @classmethod
     def starting_data(self):
         letters_list = []
         rnd_number = random.randrange(0, len(self.game_list))
         the_word = self.game_list.pop(rnd_number)
         for lett in the_word:
-            letters_list.append(lett)
-        return {"the_word": the_word, "letters": letters_list, "words_list": self.game_list}
+            letters_list.append("_")
+        return {"the_word": the_word, "user_word": letters_list, "words_list": self.game_list}
 
+    def gaming(self):
+        fail_count = 1
 
-    # entry_data = StartingDataFactory.WordMakeUp(UserInput.player.game_list).random_word
-    # entry_word = starting_data["the_word"]
-    # user_word = []
-    # fail_count = 1
-    #
-    # # Printer(entry_data["the_word"]).empty_word()
-    #
-    # def gaming(self):
-    #     while True:
-    #         letter = str(input("Ask a letter from the word: "))
-    #         guessed_right = 0
-    #         for i in self.entry_word:
-    #             if self.entry_word[i] == letter:
-    #                 self.user_word[i] = letter
-    #                 guessed_right += 1
-    #
-    #         if guessed_right != 0:
-    #             Printer(self.user_word).in_game_print()
-    #             if "_" not in self.user_word:
-    #                 Printer(self.username).win_result()
-    #                 break
-    #         else:
-    #             Printer(self.fail_count).hangman()
-    #             self.fail_count += 1
-    #             if self.fail_count == len(self.entry_word):
-    #                 print("Game over! You lose!")
-    #                 break
+        Printer(self.the_word).empty_word()
+
+        while True:
+            letter = str(input("Ask a letter from the word: "))
+            guessed_right = 0
+            for i in range(len(self.the_word)):
+                if self.the_word[i] == letter:
+                    self.user_word[i] = letter
+                    guessed_right += 1
+
+            if guessed_right != 0:
+                Printer(self.user_word).in_game_print()
+                if "_" not in self.user_word:
+                    Printer(self.username).win_result()
+                    break
+            else:
+                Printer(fail_count).hangman()
+                fail_count += 1
+                if fail_count == len(self.the_word):
+                    print("Game over! You lose!")
+                    break
 
 
 # Working with files, loading or saving data to the database
@@ -124,7 +121,7 @@ class Printer(object):
     def empty_word(self):
         print ()
         for i in self.value:
-            print(" _ "),
+            print(" _ ", end="")
         print ()
 
     def in_game_print(self):
@@ -158,6 +155,6 @@ class UserInput(object):
     category = str(input("Choose category of words (animals, cars, cities): "))
 
     player = Hangman(username, category, difficulty)
-    print(player.starting_data)
+    player.gaming()
 
 # *********************************************************************************************************
