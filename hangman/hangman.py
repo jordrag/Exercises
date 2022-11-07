@@ -17,9 +17,6 @@ class Database(object):
 
 # ************************************************************************************************************
 
-
-# ***************************************** The game logic ***************************************************
-
 class Hangman(with_metaclass(ABCMeta)):
 
     @abstractmethod
@@ -43,6 +40,8 @@ class Hangman(with_metaclass(ABCMeta)):
         pass
 
 
+# ***************************************** The game logic ***************************************************
+
 class HangmanOne(Hangman):
     def __init__(self, name, cat, diff):
         self.username = name
@@ -56,8 +55,6 @@ class HangmanOne(Hangman):
         self.victory = False
         self.guessed_letters = []
         self.fail_count = 1
-
-    # player = GamePlay(username, category, difficulty)
 
     # Making specific list according user's input data for category and difficulty level
 
@@ -87,12 +84,14 @@ class HangmanOne(Hangman):
             empty_list.append("_")
         return {"the_word": the_word, "user_word": empty_list, "words_list": self.game_list}
 
+    # The core...................
+
     def gaming(self):
         # fail_count = 1
         print()
         print(f"Hello {self.username}, you have {self.hil_points} HIL points, let's play !")
 
-        Printer(self.the_word).empty_word()
+        ScreenPrint(self.the_word).empty_word()
 
         while True:
             letter = input("Ask a letter from the word: ")
@@ -109,16 +108,16 @@ class HangmanOne(Hangman):
                         guessed_right += 1
 
                 if guessed_right != 0:
-                    Printer(self.user_word).in_game_print()
+                    ScreenPrint(self.user_word).in_game_print()
                     if "_" not in self.user_word:
                         self.victory = True
                         self.hil_points += 1
-                        Printer(self.username).win_result(self.hil_points)
+                        ScreenPrint(self.username).win_result(self.hil_points)
                 else:
-                    Printer(self.fail_count).hangman()
+                    ScreenPrint(self.fail_count).hangman()
                     self.fail_count += 1
                     if self.fail_count == len(self.the_word) + 1:
-                        Printer(self.username).lost_result(self.hil_points)
+                        ScreenPrint(self.username).lost_result(self.hil_points)
                         break
 
     # Commands through the game for exit, hints, whole word suggestion, etc..
@@ -126,39 +125,24 @@ class HangmanOne(Hangman):
         if command == 1:
             ind = self.user_word.index("_")
             self.user_word[ind] = self.the_word[ind]
-            Printer(self.user_word).in_game_print()
+            ScreenPrint(self.user_word).in_game_print()
         elif command == 2:
-            Printer(self.username).lost_result(self.hil_points)
+            ScreenPrint(self.username).lost_result(self.hil_points)
 
         elif command == 3:
             whole_word = input("Please, enter the whole word you think it is: ")
             if whole_word == self.the_word:
                 self.hil_points += 1
-                Printer(self.username).win_result(self.hil_points)
+                ScreenPrint(self.username).win_result(self.hil_points)
             else:
-                Printer(self.fail_count).hangman()
+                ScreenPrint(self.fail_count).hangman()
         elif command == 4:
-            Printer(self.guessed_letters).guessed_letters()
-
-
-# Working with files, loading or saving data to the database
-class FileOperations(object):
-
-    def loading_data(self):
-        pass
-
-    def saving_data(self):
-        pass
-
-
-class UserOutput(object):
-    pass
-
+            ScreenPrint(self.guessed_letters).guessed_letters()
 
 # *************************************************************************************************************
 
-# ********************* Printing info on the screen (the bad and the good results) ****************************
-class Printer(object):
+# *********************************** Printing info on the screen  ********************************************
+class ScreenPrint(object):
     # print UserInput.player.username
     # print UserInput.player.hil_points
     # print WordMakeUp(UserInput.player.game_list).random_word
