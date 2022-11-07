@@ -45,6 +45,8 @@ class HangmanOne(Hangman):
         self.starting_data = self.starting_data()
         self.the_word = self.starting_data["the_word"]
         self.user_word = self.starting_data["user_word"]
+        self.victory = False
+        self.guessed_letters = []
 
     # player = GamePlay(username, category, difficulty)
 
@@ -78,15 +80,20 @@ class HangmanOne(Hangman):
 
     def gaming(self):
         fail_count = 1
+        print()
+        print(f"Hello {self.username}, you have {self.hil_points} HIL points, let's play !")
 
         Printer(self.the_word).empty_word()
 
         while True:
-            letter = str(input("Ask a letter from the word: "))
+            letter = input("Ask a letter from the word: ")
+            self.guessed_letters.append(letter)
             guessed_right = 0
-            if letter == "/":
-                command = input("Choose command (1.Hint, 2.Stop game, 3.If you wanna guess the whole word !")
-                Commands(command)
+
+            if letter == "@":
+                command = input("Choose command (1. Hint, 2. Stop, 3. Word, 4. Show guessed letters) --> " )
+                Commands(command).result()
+
 
             for i in range(len(self.the_word)):
                 if self.the_word[i] == letter:
@@ -96,13 +103,14 @@ class HangmanOne(Hangman):
             if guessed_right != 0:
                 Printer(self.user_word).in_game_print()
                 if "_" not in self.user_word:
-                    Printer(self.username).win_result()
-                    break
+                    self.victory = True
+                    self.hil_points += 1
+                    Printer(self.username).win_result(self.hil_points)
             else:
                 Printer(fail_count).hangman()
                 fail_count += 1
                 if fail_count == len(self.the_word) + 1:
-                    print("Game over! You lose!")
+                    Printer(self.username).lost_result(self.hil_points)
                     break
 
 
@@ -121,14 +129,28 @@ class Commands(object):
     def __init__(self, value):
         self.value = value
 
-    def stop_game(self):
+    def result(self):
+        if self.value == 1:
+            return self.hint()
+        elif self.value == 2:
+            return self.stop()
+        elif self.value == 3:
+            return self.word()
+        elif self.value == 4:
+            return self.guessed_letters()
+        # else:
+        #     raise ValueError ("Not supported choice !")
+    def stop(self):
         pass
 
     def hint(self):
         pass
 
-    def whole_word(self):
+    def word(self):
         pass
+
+    def guessed_letters(self):
+        print(self.guessed_letters())
 
 
 class UserOutput(object):
@@ -144,6 +166,7 @@ class Printer(object):
     # print WordMakeUp(UserInput.player.game_list).random_word
 
     def __init__(self, value):
+        # self.points = points
         self.value = value
 
     def empty_word(self):
@@ -164,11 +187,13 @@ class Printer(object):
     def not_guessed_letters(self):
         pass
 
-    def win_result(self):
+    def win_result(self, points):
         print(f"{self.value}, you won !")
+        print(f"Total HIL points: {points}")
 
-    def lost_result(self):
+    def lost_result(self, points):
         print(f"Game over! {self.value}, you've lost !")
+        print(f"Total HIL points: {points}")
 
 
 # ********************************************************************************************************
