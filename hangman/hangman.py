@@ -34,6 +34,14 @@ class Hangman(with_metaclass(ABCMeta)):
     def starting_data(self):
         pass
 
+    @abstractmethod
+    def gaming(self):
+        pass
+
+    @abstractmethod
+    def commands(self):
+        pass
+
 
 class HangmanOne(Hangman):
     def __init__(self, name, cat, diff):
@@ -47,6 +55,7 @@ class HangmanOne(Hangman):
         self.user_word = self.starting_data["user_word"]
         self.victory = False
         self.guessed_letters = []
+        self.fail_count = 1
 
     # player = GamePlay(username, category, difficulty)
 
@@ -71,15 +80,15 @@ class HangmanOne(Hangman):
         return Database.usernames_list[self.username]
 
     def starting_data(self):
-        letters_list = []
+        empty_list = []
         rnd_number = random.randrange(0, len(self.game_list))
         the_word = self.game_list.pop(rnd_number)
         for lett in the_word:
-            letters_list.append("_")
-        return {"the_word": the_word, "user_word": letters_list, "words_list": self.game_list}
+            empty_list.append("_")
+        return {"the_word": the_word, "user_word": empty_list, "words_list": self.game_list}
 
     def gaming(self):
-        fail_count = 1
+        # fail_count = 1
         print()
         print(f"Hello {self.username}, you have {self.hil_points} HIL points, let's play !")
 
@@ -91,9 +100,8 @@ class HangmanOne(Hangman):
             guessed_right = 0
 
             if letter == "@":
-                command = input("Choose command (1. Hint, 2. Stop, 3. Word, 4. Show guessed letters) --> " )
-                Commands(command).result()
-
+                command = input("Choose command (1. Hint, 2. Stop, 3. Word, 4. Show/hide guessed letters) --> ")
+                self.commands(command)
 
             for i in range(len(self.the_word)):
                 if self.the_word[i] == letter:
@@ -107,11 +115,28 @@ class HangmanOne(Hangman):
                     self.hil_points += 1
                     Printer(self.username).win_result(self.hil_points)
             else:
-                Printer(fail_count).hangman()
-                fail_count += 1
-                if fail_count == len(self.the_word) + 1:
+                Printer(self.fail_count).hangman()
+                self.fail_count += 1
+                if self.fail_count == len(self.the_word) + 1:
                     Printer(self.username).lost_result(self.hil_points)
                     break
+
+    # Commands through the game for exit, hints, whole word suggestion, etc..
+    def commands(self, command):
+        if command == 1:
+            ind = self.user_word.index("_")
+            self.user_word[ind] = self.the_word[ind]
+            Printer(self.user_word).in_game_print()
+        elif command == 2:
+            Printer(self.username).lost_result(self.hil_points)
+        elif command == 3:
+            whole_word = input("Please, enter the whole word you think is: ")
+            if whole_word == self.the_word:
+                Printer(self.username).win_result(self.hil_points)
+            else:
+                Printer(self.fail_count).hangman()
+        elif command == 4:
+            Printer(self.guessed_letters).guessed_letters()
 
 
 # Working with files, loading or saving data to the database
@@ -122,35 +147,6 @@ class FileOperations(object):
 
     def saving_data(self):
         pass
-
-
-# Commands through the game for exit, hints, whole word suggestion, etc..
-class Commands(object):
-    def __init__(self, value):
-        self.value = value
-
-    def result(self):
-        if self.value == 1:
-            return self.hint()
-        elif self.value == 2:
-            return self.stop()
-        elif self.value == 3:
-            return self.word()
-        elif self.value == 4:
-            return self.guessed_letters()
-        # else:
-        #     raise ValueError ("Not supported choice !")
-    def stop(self):
-        pass
-
-    def hint(self):
-        pass
-
-    def word(self):
-        pass
-
-    def guessed_letters(self):
-        print(self.guessed_letters())
 
 
 class UserOutput(object):
@@ -182,10 +178,7 @@ class Printer(object):
         print("*" * self.value)
 
     def guessed_letters(self):
-        pass
-
-    def not_guessed_letters(self):
-        pass
+        print(self.value)
 
     def win_result(self, points):
         print(f"{self.value}, you won !")
