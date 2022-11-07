@@ -100,38 +100,40 @@ class HangmanOne(Hangman):
             guessed_right = 0
 
             if letter == "@":
-                command = input("Choose command (1. Hint, 2. Stop, 3. Word, 4. Show/hide guessed letters) --> ")
+                command = int(input("Choose command (1. Hint, 2. Stop, 3. Word, 4. Show/hide guessed letters) --> "))
                 self.commands(command)
-
-            for i in range(len(self.the_word)):
-                if self.the_word[i] == letter:
-                    self.user_word[i] = letter
-                    guessed_right += 1
-
-            if guessed_right != 0:
-                Printer(self.user_word).in_game_print()
-                if "_" not in self.user_word:
-                    self.victory = True
-                    self.hil_points += 1
-                    Printer(self.username).win_result(self.hil_points)
             else:
-                Printer(self.fail_count).hangman()
-                self.fail_count += 1
-                if self.fail_count == len(self.the_word) + 1:
-                    Printer(self.username).lost_result(self.hil_points)
-                    break
+                for i in range(len(self.the_word)):
+                    if self.the_word[i] == letter:
+                        self.user_word[i] = letter
+                        guessed_right += 1
+
+                if guessed_right != 0:
+                    Printer(self.user_word).in_game_print()
+                    if "_" not in self.user_word:
+                        self.victory = True
+                        self.hil_points += 1
+                        Printer(self.username).win_result(self.hil_points)
+                else:
+                    Printer(self.fail_count).hangman()
+                    self.fail_count += 1
+                    if self.fail_count == len(self.the_word) + 1:
+                        Printer(self.username).lost_result(self.hil_points)
+                        break
 
     # Commands through the game for exit, hints, whole word suggestion, etc..
-    def commands(self, command):
+    def commands(self, command):        # 1. Hint, 2. Stop, 3. Word, 4. Show/hide guessed letters
         if command == 1:
             ind = self.user_word.index("_")
             self.user_word[ind] = self.the_word[ind]
             Printer(self.user_word).in_game_print()
         elif command == 2:
             Printer(self.username).lost_result(self.hil_points)
+
         elif command == 3:
-            whole_word = input("Please, enter the whole word you think is: ")
+            whole_word = input("Please, enter the whole word you think it is: ")
             if whole_word == self.the_word:
+                self.hil_points += 1
                 Printer(self.username).win_result(self.hil_points)
             else:
                 Printer(self.fail_count).hangman()
