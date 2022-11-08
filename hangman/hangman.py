@@ -103,7 +103,7 @@ class HangmanOne(Hangman):
                 ScreenPrint(self.user_word).in_game_print()
 
             elif command == 2:
-                ScreenPrint(self.username).lost_result(self.hil_points)
+                ScreenPrint(self.username).change_params(self.hil_points)
                 self.trigger = True
 
             elif command == 3:
@@ -139,8 +139,9 @@ class HangmanOne(Hangman):
 
             try:
                 if letter == "@":
-                    command = int(input("Choose command (1. Hint, 2. Stop, 3. Word, 4. Show/hide guessed letters, "
-                                        "5. Change HIL points to try) --> "))
+                    command = int(input("Choose command (1. Hint, 2. Quit game/Change category/Change diff, "
+                                        "3. Guess whole word, 4. Show/hide guessed letters, "
+                                        "5. Exchange HIL points to 1 additional try --> "))
                     commands(command)
                 else:
                     self.guessed_letters.append(letter)
@@ -171,9 +172,15 @@ class HangmanOne(Hangman):
         if a == "y":
             print("OK, your HIL points are saved, bye !")
         elif a == "n":
-            b = input ("1. New player, 2. Change level and/or category: ")
+            b = int(input ("1. Change level, 2. Change category: "))
             if b == 1:
-                UserInput()
+                new_diff = str(input("Choose difficulty level (easy, medium, hard): "))
+                player = HangmanOne(self.username, self.category, new_diff)
+                player.gaming()
+            elif b == 2:
+                new_category = str(input("Choose category of words (animals, cars, cities): "))
+                player = HangmanOne(self.username, new_category, self.difficulty)
+                player.gaming()
 
 # *************************************************************************************************************
 
@@ -204,6 +211,10 @@ class ScreenPrint(object):
 
     def lost_result(self, points):
         print(f"Game over! {self.value}, you've lost !")
+        print(f"Total HIL points: {points}")
+
+    def change_params(self,points):
+        print ("Leaving...")
         print(f"Total HIL points: {points}")
 
 
