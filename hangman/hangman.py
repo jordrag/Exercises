@@ -36,9 +36,9 @@ class Hangman(with_metaclass(ABCMeta)):
     def gaming(self):
         pass
 
-    @abstractmethod
-    def commands(self):
-        pass
+    # @abstractmethod
+    # def commands(self):
+    #     pass
 
 
 # ***************************************** The game logic ***************************************************
@@ -93,15 +93,49 @@ class HangmanOne(Hangman):
 
         ScreenPrint(self.the_word).empty_word()
 
+        # Commands through the game for exit, hints, whole word suggestion, etc..
+        # 1. Hint, 2. Stop, 3. Word, 4. Show/hide guessed letters
+
+        def commands(command):
+            def hint():
+                ind = self.user_word.index("_")
+                self.user_word[ind] = self.the_word[ind]
+                return ScreenPrint(self.user_word).in_game_print()
+
+            def stop():
+                return ScreenPrint(self.username).lost_result(self.hil_points)
+
+            def word():
+                whole_word = input("Please, enter the whole word you think it is: ")
+                if whole_word == self.the_word:
+                    self.hil_points += 1
+                    return ScreenPrint(self.username).win_result(self.hil_points)
+                else:
+                    return ScreenPrint(self.fail_count).hangman()
+
+            def letters():
+                return ScreenPrint(self.guessed_letters).guessed_letters()
+
+            def invalid_op():
+                raise Exception("Invalid operation !")
+
+            ops = {1: hint(),
+                   2: stop(),
+                   3: word(),
+                   4: letters()}
+
+            chosen_operation = ops[command]
+            return chosen_operation
+
         while True:
             letter = input("Ask a letter from the word: ")
-            self.guessed_letters.append(letter)
             guessed_right = 0
 
             if letter == "@":
                 command = int(input("Choose command (1. Hint, 2. Stop, 3. Word, 4. Show/hide guessed letters) --> "))
-                self.commands(command)
+                commands(command)
             else:
+                self.guessed_letters.append(letter)
                 for i in range(len(self.the_word)):
                     if self.the_word[i] == letter or self.the_word[i] == letter.lower() \
                             or self.the_word[i] == letter.upper():
@@ -114,6 +148,7 @@ class HangmanOne(Hangman):
                         self.victory = True
                         self.hil_points += 1
                         ScreenPrint(self.username).win_result(self.hil_points)
+                        break
                 else:
                     ScreenPrint(self.fail_count).hangman()
                     self.fail_count += 1
@@ -121,24 +156,6 @@ class HangmanOne(Hangman):
                         ScreenPrint(self.username).lost_result(self.hil_points)
                         break
 
-    # Commands through the game for exit, hints, whole word suggestion, etc..
-    def commands(self, command):        # 1. Hint, 2. Stop, 3. Word, 4. Show/hide guessed letters
-        if command == 1:
-            ind = self.user_word.index("_")
-            self.user_word[ind] = self.the_word[ind]
-            ScreenPrint(self.user_word).in_game_print()
-        elif command == 2:
-            ScreenPrint(self.username).lost_result(self.hil_points)
-
-        elif command == 3:
-            whole_word = input("Please, enter the whole word you think it is: ")
-            if whole_word == self.the_word:
-                self.hil_points += 1
-                ScreenPrint(self.username).win_result(self.hil_points)
-            else:
-                ScreenPrint(self.fail_count).hangman()
-        elif command == 4:
-            ScreenPrint(self.guessed_letters).guessed_letters()
 
 # *************************************************************************************************************
 
