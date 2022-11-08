@@ -161,7 +161,7 @@ class HangmanOne(Hangman):
                         ScreenPrint(self.fail_count).hangman()
                         self.fail_count += 1
                         if self.fail_count == len(self.the_word) + 1:
-                            ScreenPrint(self.username).lost_result(self.hil_points)
+                            ScreenPrint(self.username).lost_result(self.hil_points, self.the_word)
                             break
 
             except Exception:
@@ -172,15 +172,18 @@ class HangmanOne(Hangman):
         if a == "y":
             print("OK, your HIL points are saved, bye !")
         elif a == "n":
+            new_category = ""
+            new_diff = ""
             b = int(input ("1. Change level, 2. Change category: "))
             if b == 1:
                 new_diff = str(input("Choose difficulty level (easy, medium, hard): "))
-                player = HangmanOne(self.username, self.category, new_diff)
-                player.gaming()
+                new_category = self.category
             elif b == 2:
                 new_category = str(input("Choose category of words (animals, cars, cities): "))
-                player = HangmanOne(self.username, new_category, self.difficulty)
-                player.gaming()
+                new_diff = self.difficulty
+
+            player = HangmanOne(self.username, new_category, new_diff)
+            player.gaming()
 
 # *************************************************************************************************************
 
@@ -209,8 +212,9 @@ class ScreenPrint(object):
         print(f"{self.value}, you won !")
         print(f"Total HIL points: {points}")
 
-    def lost_result(self, points):
+    def lost_result(self, points, word):
         print(f"Game over! {self.value}, you've lost !")
+        print(f"The word is -> {word}")
         print(f"Total HIL points: {points}")
 
     def change_params(self,points):
