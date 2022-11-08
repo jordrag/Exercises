@@ -3,7 +3,7 @@ from abc import ABCMeta, abstractmethod
 from six import with_metaclass
 
 
-# **************** The database for users, categories and levels in the game **********************************
+# **************** The database for users, categories and levels in the game *********************************
 class Database(object):
     usernames_list = {"Ace": 5, "Base": 10, "Case": 15}
 
