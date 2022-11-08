@@ -53,7 +53,7 @@ class HangmanOne(Hangman):
         self.starting_data = self.starting_data()
         self.the_word = self.starting_data["the_word"]
         self.user_word = self.starting_data["user_word"]
-        self.victory = False
+        self.trigger = False
         self.guessed_letters = []
         self.fail_count = 1
 
@@ -97,74 +97,88 @@ class HangmanOne(Hangman):
         # 1. Hint, 2. Stop, 3. Word, 4. Show/hide guessed letters
 
         def commands(command):
-            def hint():
+            if command == 1:
                 ind = self.user_word.index("_")
                 self.user_word[ind] = self.the_word[ind]
-                return ScreenPrint(self.user_word).in_game_print()
+                ScreenPrint(self.user_word).in_game_print()
 
-            def stop():
-                return ScreenPrint(self.username).lost_result(self.hil_points)
+            elif command == 2:
+                ScreenPrint(self.username).lost_result(self.hil_points)
+                self.trigger = True
 
-            def word():
+            elif command == 3:
                 whole_word = input("Please, enter the whole word you think it is: ")
-                if whole_word == self.the_word:
+                if whole_word == self.the_word or whole_word == self.the_word.lower():
+                    self.trigger = True
                     self.hil_points += 1
-                    return ScreenPrint(self.username).win_result(self.hil_points)
+                    ScreenPrint(self.username).win_result(self.hil_points)
                 else:
-                    return ScreenPrint(self.fail_count).hangman()
+                    ScreenPrint(self.fail_count).hangman()
 
-            def letters():
-                return ScreenPrint(self.guessed_letters).guessed_letters()
+            elif command == 4:
+                ScreenPrint(self.guessed_letters).guessed_letters()
 
-            def invalid_op():
-                raise Exception("Invalid operation !")
+            elif command == 5:
+                if self.hil_points - 10 >= 0:
+                    self.fail_count -= 1
+                    print("Now you have one more try !")
+                else:
+                    print("You don't have enough HIL points !")
 
-            ops = {1: hint(),
-                   2: stop(),
-                   3: word(),
-                   4: letters()}
-
-            chosen_operation = ops[command]
-            return chosen_operation
+            # ops = {1: hint(),
+            #        2: stop(),
+            #        3: word(),
+            #        4: letters()}
 
         while True:
+            if self.trigger:
+                break
+
             letter = input("Ask a letter from the word: ")
             guessed_right = 0
 
-            if letter == "@":
-                command = int(input("Choose command (1. Hint, 2. Stop, 3. Word, 4. Show/hide guessed letters) --> "))
-                commands(command)
-            else:
-                self.guessed_letters.append(letter)
-                for i in range(len(self.the_word)):
-                    if self.the_word[i] == letter or self.the_word[i] == letter.lower() \
-                            or self.the_word[i] == letter.upper():
-                        self.user_word[i] = self.the_word[i]
-                        guessed_right += 1
-
-                if guessed_right != 0:
-                    ScreenPrint(self.user_word).in_game_print()
-                    if "_" not in self.user_word:
-                        self.victory = True
-                        self.hil_points += 1
-                        ScreenPrint(self.username).win_result(self.hil_points)
-                        break
+            try:
+                if letter == "@":
+                    command = int(input("Choose command (1. Hint, 2. Stop, 3. Word, 4. Show/hide guessed letters, "
+                                        "5. Change HIL points to try) --> "))
+                    commands(command)
                 else:
-                    ScreenPrint(self.fail_count).hangman()
-                    self.fail_count += 1
-                    if self.fail_count == len(self.the_word) + 1:
-                        ScreenPrint(self.username).lost_result(self.hil_points)
-                        break
+                    self.guessed_letters.append(letter)
+                    for i in range(len(self.the_word)):
+                        if self.the_word[i] == letter or self.the_word[i] == letter.lower() \
+                                or self.the_word[i] == letter.upper():
+                            self.user_word[i] = self.the_word[i]
+                            guessed_right += 1
 
+                    if guessed_right != 0:
+                        ScreenPrint(self.user_word).in_game_print()
+                        if "_" not in self.user_word:
+                            self.trigger = True
+                            self.hil_points += 1
+                            ScreenPrint(self.username).win_result(self.hil_points)
+                    else:
+                        ScreenPrint(self.fail_count).hangman()
+                        self.fail_count += 1
+                        if self.fail_count == len(self.the_word) + 1:
+                            ScreenPrint(self.username).lost_result(self.hil_points)
+                            break
+
+            except Exception:
+                print("Invalid input !!!")
+
+        Database.usernames_list[self.username] = self.hil_points
+        a = input("Do yoy wanna quit (y/n) ?")
+        if a == "y":
+            print("OK, your HIL points are saved, bye !")
+        elif a == "n":
+            b = input ("1. New player, 2. Change level and/or category: ")
+            if b == 1:
+                UserInput()
 
 # *************************************************************************************************************
 
 # *********************************** Printing info on the screen  ********************************************
 class ScreenPrint(object):
-    # print UserInput.player.username
-    # print UserInput.player.hil_points
-    # print WordMakeUp(UserInput.player.game_list).random_word
-
     def __init__(self, value):
         # self.points = points
         self.value = value
