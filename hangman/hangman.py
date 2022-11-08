@@ -88,7 +88,6 @@ class HangmanOne(Hangman):
     # The core...................
 
     def gaming(self):
-        # fail_count = 1
         print()
         print(f"Hello {self.username}, you have {self.hil_points} HIL points, let's play !")
 
@@ -104,8 +103,9 @@ class HangmanOne(Hangman):
                 self.commands(command)
             else:
                 for i in range(len(self.the_word)):
-                    if self.the_word[i] == letter:
-                        self.user_word[i] = letter
+                    if self.the_word[i] == letter or self.the_word[i] == letter.lower() \
+                            or self.the_word[i] == letter.upper():
+                        self.user_word[i] = self.the_word[i]
                         guessed_right += 1
 
                 if guessed_right != 0:
