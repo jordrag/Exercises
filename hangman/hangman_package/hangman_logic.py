@@ -81,6 +81,7 @@ class HangmanOne(Hangman):
         1. Hint, 2. Quit game/Change category/Change diff, 3. Guess whole word, 4. Show/hide guessed letters,
         5. Exchange HIL points to 1 additional try
         '''
+
         def commands(command):
             def hint():
                 ind = self.user_word.index("_")
@@ -172,17 +173,27 @@ class HangmanOne(Hangman):
                     print("OK, your HIL points are saved, bye !")
                     break
                 elif a == "n":
-                    new_category = ""
-                    new_diff = ""
-                    b = int(input ("1. Change level, 2. Change category: "))
-                    if b == 1:
-                        new_diff = str(input("Choose difficulty level (easy, medium, hard): "))
-                        new_category = self.category
-                    elif b == 2:
-                        new_category = str(input("Choose category of words (animals, cars, cities): "))
-                        new_diff = self.difficulty
+                    comm = int(input("1. Continue 2. Change level, 3. Change category: "))
 
-                    player = HangmanOne(self.username, new_category, new_diff)
+                    def change_logic(comm):
+                        def cont():
+                            pass
+
+                        def change_level():
+                            self.difficulty = str(input("Choose difficulty level (easy, medium, hard): "))
+
+                        def change_category():
+                            self.category = str(input("Choose category of words (animals, cars, cities): "))
+
+                        ops = {1: cont,
+                               2: change_level,
+                               3: change_category
+                               }
+
+                        return ops[comm]()
+
+                    change_logic(comm)
+                    player = HangmanOne(self.username, self.category, self.difficulty)
                     player.gaming()
                     break
 
@@ -190,4 +201,3 @@ class HangmanOne(Hangman):
                 print("Invalid input !!!")
 
 # *************************************************************************************************************
-

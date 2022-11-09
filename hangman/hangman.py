@@ -16,6 +16,6 @@ class UserInput(object):
             player.gaming()
             break
         except Exception:
-            print("Please enter a valid parameters !")
+            print("Please enter valid parameters !")
 
 # *********************************************************************************************************
