@@ -172,6 +172,7 @@ class HangmanOne(Hangman):
                 if a == "y":
                     print("OK, your HIL points are saved, bye !")
                     break
+
                 elif a == "n":
                     comm = int(input("1. Continue 2. Change level, 3. Change category: "))
 
