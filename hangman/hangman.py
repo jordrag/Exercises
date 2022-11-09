@@ -85,7 +85,7 @@ class HangmanOne(Hangman):
             empty_list.append("_")
         return {"the_word": the_word, "user_word": empty_list, "words_list": self.game_list}
 
-    # The core...................
+    # **************************  The core...................  ********************************************
 
     def gaming(self):
         print()
@@ -134,8 +134,9 @@ class HangmanOne(Hangman):
                    4: letters,
                    5: additional_try}
 
-            chosen_operation = ops[command]()
-            # chosen_op_object = chosen_operation()
+            return ops[command]()
+
+        # Game loop for taking letters or commands from user
 
         while True:
             if self.trigger:
@@ -174,7 +175,12 @@ class HangmanOne(Hangman):
             except Exception:
                 print("Invalid input !!!")
 
+        # Saving user's HIL points on exit
+
         Database.usernames_list[self.username] = self.hil_points
+
+        # Exit menu offering to quit or make some changes to the game
+
         while True:
             try:
                 a = input("Do yoy wanna quit (y/n) ?")
@@ -256,7 +262,5 @@ class UserInput(object):
             break
         except Exception:
             print("Please enter a valid parameters !")
-
-
 
 # *********************************************************************************************************
