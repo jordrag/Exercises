@@ -93,20 +93,21 @@ class HangmanOne(Hangman):
 
         ScreenPrint(self.the_word).empty_word()
 
-        # Commands through the game for exit, hints, whole word suggestion, etc..
-        # 1. Hint, 2. Stop, 3. Word, 4. Show/hide guessed letters
-
+        ''' Commands through the game for exit, hints, whole word suggestion, etc..
+        1. Hint, 2. Quit game/Change category/Change diff, 3. Guess whole word, 4. Show/hide guessed letters,
+        5. Exchange HIL points to 1 additional try
+        '''
         def commands(command):
-            if command == 1:
+            def hint():
                 ind = self.user_word.index("_")
                 self.user_word[ind] = self.the_word[ind]
                 ScreenPrint(self.user_word).in_game_print()
 
-            elif command == 2:
+            def stop():
                 ScreenPrint(self.username).change_params(self.hil_points)
                 self.trigger = True
 
-            elif command == 3:
+            def word():
                 whole_word = input("Please, enter the whole word you think it is: ")
                 if whole_word == self.the_word or whole_word == self.the_word.lower():
                     self.trigger = True
@@ -115,20 +116,25 @@ class HangmanOne(Hangman):
                 else:
                     ScreenPrint(self.fail_count).hangman()
 
-            elif command == 4:
+            def letters():
                 ScreenPrint(self.guessed_letters).guessed_letters()
 
-            elif command == 5:
+            def additional_try():
                 if self.hil_points - 10 >= 0:
                     self.fail_count -= 1
                     print("Now you have one more try !")
                 else:
                     print("You don't have enough HIL points !")
 
-            # ops = {1: hint(),
-            #        2: stop(),
-            #        3: word(),
-            #        4: letters()}
+            ops = {1: hint,
+                   2: stop,
+                   3: word,
+                   4: letters,
+                   5: additional_try}
+
+            chosen_operation = ops[command]
+            chosen_op_object = chosen_operation()
+            # return chosen_op_object
 
         while True:
             if self.trigger:
