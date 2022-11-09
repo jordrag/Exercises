@@ -24,10 +24,6 @@ class Hangman(with_metaclass(ABCMeta)):
     def gaming(self):
         pass
 
-    # @abstractmethod
-    # def commands(self):
-    #     pass
-
 
 # ***************************************** The game logic ***************************************************
 

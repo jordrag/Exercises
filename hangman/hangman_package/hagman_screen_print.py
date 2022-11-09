@@ -1,7 +1,6 @@
 # *********************************** Printing info on the screen  ********************************************
 class ScreenPrint(object):
     def __init__(self, value):
-        # self.points = points
         self.value = value
 
     def empty_word(self):
