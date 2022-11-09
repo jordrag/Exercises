@@ -55,7 +55,7 @@ class HangmanOne(Hangman):
         self.user_word = self.starting_data["user_word"]
         self.trigger = False
         self.guessed_letters = []
-        self.fail_count = 1
+        self.fail_count = 0
 
     # Making specific list according user's input data for category and difficulty level
 
@@ -121,7 +121,7 @@ class HangmanOne(Hangman):
                 ScreenPrint(self.guessed_letters).guessed_letters()
 
             def additional_try():
-                if self.hil_points - 10 >= 0:
+                if self.hil_points - 10 >= 0 and self.fail_count >= 1:
                     self.fail_count -= 1
                     self.hil_points -= 10
                     print(f"Now you have one more try and {self.hil_points} HIL points remaining !")
@@ -165,8 +165,8 @@ class HangmanOne(Hangman):
                             self.hil_points += 1
                             ScreenPrint(self.username).win_result(self.hil_points)
                     else:
-                        ScreenPrint(self.fail_count).hangman()
                         self.fail_count += 1
+                        ScreenPrint(self.fail_count).hangman()
                         if self.fail_count == len(self.the_word) + 1:
                             ScreenPrint(self.username).lost_result(self.hil_points, self.the_word)
                             break
@@ -175,22 +175,29 @@ class HangmanOne(Hangman):
                 print("Invalid input !!!")
 
         Database.usernames_list[self.username] = self.hil_points
-        a = input("Do yoy wanna quit (y/n) ?")
-        if a == "y":
-            print("OK, your HIL points are saved, bye !")
-        elif a == "n":
-            new_category = ""
-            new_diff = ""
-            b = int(input ("1. Change level, 2. Change category: "))
-            if b == 1:
-                new_diff = str(input("Choose difficulty level (easy, medium, hard): "))
-                new_category = self.category
-            elif b == 2:
-                new_category = str(input("Choose category of words (animals, cars, cities): "))
-                new_diff = self.difficulty
+        while True:
+            try:
+                a = input("Do yoy wanna quit (y/n) ?")
+                if a == "y":
+                    print("OK, your HIL points are saved, bye !")
+                    break
+                elif a == "n":
+                    new_category = ""
+                    new_diff = ""
+                    b = int(input ("1. Change level, 2. Change category: "))
+                    if b == 1:
+                        new_diff = str(input("Choose difficulty level (easy, medium, hard): "))
+                        new_category = self.category
+                    elif b == 2:
+                        new_category = str(input("Choose category of words (animals, cars, cities): "))
+                        new_diff = self.difficulty
 
-            player = HangmanOne(self.username, new_category, new_diff)
-            player.gaming()
+                    player = HangmanOne(self.username, new_category, new_diff)
+                    player.gaming()
+                    break
+
+            except Exception:
+                print("Invalid input !!!")
 
 # *************************************************************************************************************
 
@@ -239,11 +246,17 @@ class ScreenPrint(object):
 class UserInput(object):
     print("Hello, let's play *** Hangman *** !")
     print()
-    username = str(input("Enter username: "))
-    difficulty = str(input("Choose difficulty level (easy, medium, hard): "))
-    category = str(input("Choose category of words (animals, cars, cities): "))
+    while True:
+        try:
+            username = str(input("Enter username: "))
+            difficulty = str(input("Choose difficulty level (easy, medium, hard): "))
+            category = str(input("Choose category of words (animals, cars, cities): "))
+            player = HangmanOne(username, category, difficulty)
+            player.gaming()
+            break
+        except Exception:
+            print("Please enter a valid parameters !")
 
-    player = HangmanOne(username, category, difficulty)
-    player.gaming()
+
 
 # *********************************************************************************************************
