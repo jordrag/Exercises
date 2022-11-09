@@ -114,6 +114,7 @@ class HangmanOne(Hangman):
                     self.hil_points += 1
                     ScreenPrint(self.username).win_result(self.hil_points)
                 else:
+                    self.fail_count += 1
                     ScreenPrint(self.fail_count).hangman()
 
             def letters():
@@ -122,7 +123,8 @@ class HangmanOne(Hangman):
             def additional_try():
                 if self.hil_points - 10 >= 0:
                     self.fail_count -= 1
-                    print("Now you have one more try !")
+                    self.hil_points -= 10
+                    print(f"Now you have one more try and {self.hil_points} HIL points remaining !")
                 else:
                     print("You don't have enough HIL points !")
 
@@ -132,9 +134,8 @@ class HangmanOne(Hangman):
                    4: letters,
                    5: additional_try}
 
-            chosen_operation = ops[command]
-            chosen_op_object = chosen_operation()
-            # return chosen_op_object
+            chosen_operation = ops[command]()
+            # chosen_op_object = chosen_operation()
 
         while True:
             if self.trigger:
@@ -209,6 +210,7 @@ class ScreenPrint(object):
         print(" ".join(self.value))
 
     def hangman(self):
+        print("It's wrong ! Hanging in progress...")
         print("*" * self.value)
 
     def guessed_letters(self):
@@ -235,6 +237,8 @@ class ScreenPrint(object):
 
 # User interface
 class UserInput(object):
+    print("Hello, let's play *** Hangman *** !")
+    print()
     username = str(input("Enter username: "))
     difficulty = str(input("Choose difficulty level (easy, medium, hard): "))
     category = str(input("Choose category of words (animals, cars, cities): "))
