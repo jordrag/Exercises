@@ -3,6 +3,8 @@ from abc import ABCMeta, abstractmethod
 from six import with_metaclass
 from hangman_package.hangman_db import *
 from hangman_package.hagman_screen_print import *
+
+
 # from hangman import *
 
 
@@ -30,6 +32,7 @@ class Hangman(with_metaclass(ABCMeta)):
 
 class HangmanOne(Hangman):
     def __init__(self, name, cat, diff):
+        self.usernames = Database.usernames_list
         self.username = name
         self.difficulty = diff
         self.category = cat
@@ -124,16 +127,15 @@ class HangmanOne(Hangman):
             except Exception:
                 print("Please choose only from the options above !!!")
 
-        # Saving user's HIL points on exit
-
-        Database.usernames_list[self.username] = self.hil_points
-
         # Exit menu offering to quit or make some changes to the game
 
         while True:
             try:
                 a = input("Do yoy wanna quit (y/n) ?")
                 if a == "y":
+                    self.usernames[self.username] = self.hil_points
+                    # print(self.usernames)
+                    Database.users_save(self.usernames)
                     print("OK, your HIL points are saved, bye !")
                     break
 
@@ -164,6 +166,7 @@ class HangmanOne(Hangman):
 
             except Exception:
                 print("Invalid input !!!")
+
 
 # ************************* Special commands sector *********************************************
 

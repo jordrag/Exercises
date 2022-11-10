@@ -1,17 +1,24 @@
 # **************** The database for users, categories and levels in the game *********************************
+import json
+
+
 class Database(object):
-    usernames_list = {"Ace": 5, "Base": 10, "Case": 15}
+    # users = {"Ace": 5, "Base": 10, "Case": 15}
+    # with open("usernames.json", "w") as write_users:
+    #     json.dump(users, write_users)
 
-    categories = {"animals": ["Cow", "Elephant", "Pinguin", "Dog", "Cat", "Dragonfly", "Butterfly", "Donkey", "Horse",
-                              "Pig", "Tiger", "Lion", "Mouse", "Rat", "Cheetah", "Puma", "Aligator", "Crocodile"],
-                  "cars": ["BMW", "Ford", "Toyota", "Mazda", "Maserati", "Mercedes", "Chevrolet", "Lada", "Moskvich",
-                           "Volga", "Honda", "Suzuki", "Buick", "Opel", "Volkswagen", "Mercedes", "Lincoln",
-                           "Holden", "Audi", "Volvo", "Subaru", "Peugeot", "Renault", "Citroen", "Ferrari",
-                           "Lamborghini"],
-                  "cities": ["Varna", "Bucurest", "Mumbai", "Moscow", "Copenhagen", "Sydney", "Washington", "Sofia",
-                             "Burgas", "Stara Zagora", "Plovdiv", "London", "Toronto", "Ruse", "Veliko Tarnovo"]
-                  }
+    with open("usernames.json", "r") as read_users:
+        usernames_list = json.load(read_users)
 
-    levels = {"easy": [3, 5], "medium": [6, 9], "hard": [9, 30]}
+    with open("levels.json", "r") as read_levels:
+        levels = json.load(read_levels)
+
+    with open("categories.json", "r") as read_cats:
+        categories = json.load(read_cats)
+
+    @classmethod
+    def users_save(cls, users):
+        with open("usernames.json", "w") as write_users:
+            json.dump(users, write_users)
 
 # ************************************************************************************************************
