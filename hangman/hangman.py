@@ -1,4 +1,4 @@
-from hangman_package.hangman_logic import *
+from hangman_package.hangman_logic_new import *
 
 
 # ************************************** User interface **************************************************
