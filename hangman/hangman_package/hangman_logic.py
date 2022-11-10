@@ -5,7 +5,7 @@ from hangman_package.hangman_db import *
 from hangman_package.hagman_screen_print import *
 
 
-# ******************************** The Abstract class ********************************************************
+# ******************************** The Abstract class *******************************************************
 class Hangman(with_metaclass(ABCMeta)):
 
     @abstractmethod
