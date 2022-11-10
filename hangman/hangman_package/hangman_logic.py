@@ -158,7 +158,7 @@ class HangmanOne(Hangman):
                             break
 
             except Exception:
-                print("Invalid input !!!")
+                print("Please choose only from the options above !!!")
 
         # Saving user's HIL points on exit
 
