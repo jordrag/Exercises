@@ -6,11 +6,6 @@ class Database(object):
     # users = {"Ace": 5, "Base": 10, "Case": 15}
     # with open("hangman_package/usernames.json", "w") as write_users:
     #     json.dump(users, write_users)
-    @classmethod
-    def ex_word_read(cls):
-        with open("hangman_package/exclude_word.json", "r") as read_ex_word:
-            exclude_list = json.load(read_ex_word)
-        return exclude_list
 
     with open("hangman_package/usernames.json", "r") as read_users:
         usernames_list = json.load(read_users)
@@ -30,5 +25,11 @@ class Database(object):
     def exclude_word_save(cls, ex_word):
         with open("hangman_package/exclude_word.json", "w") as write_ex_word:
             json.dump(ex_word, write_ex_word)
+
+    @classmethod
+    def ex_word_read(cls):
+        with open("hangman_package/exclude_word.json", "r") as read_ex_word:
+            exclude_list = json.load(read_ex_word)
+        return exclude_list
 
 # ************************************************************************************************************
