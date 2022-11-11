@@ -5,9 +5,6 @@ from hangman_package.hangman_db import *
 from hangman_package.hagman_screen_print import *
 
 
-# from hangman import *
-
-
 # ******************************** The Abstract class *******************************************************
 class Hangman(with_metaclass(ABCMeta)):
 
@@ -134,7 +131,6 @@ class HangmanOne(Hangman):
                 a = input("Do yoy wanna quit (y/n) ?")
                 if a == "y":
                     self.usernames[self.username] = self.hil_points
-                    # print(self.usernames)
                     Database.users_save(self.usernames)
                     print("OK, your HIL points are saved, bye !")
                     break
