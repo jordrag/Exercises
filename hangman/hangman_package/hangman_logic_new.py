@@ -90,6 +90,7 @@ class HangmanOne(Hangman):
             if self.trigger:
                 break
 
+            print(f"Game points: {self.game_points}")
             letter = input("Ask a letter from the word: ")
             guessed_right = 0
 
@@ -144,9 +145,7 @@ class HangmanOne(Hangman):
 
                     def change_logic(comm):
                         def cont():
-                            self.usernames[self.username] = self.hil_points
-                            Database.users_save(self.usernames)
-                            pass
+                            self.exclude_word = self.the_word
 
                         def change_level():
                             self.difficulty = str(input("Choose difficulty level (easy, medium, hard): "))
@@ -162,6 +161,8 @@ class HangmanOne(Hangman):
                         return ops[comm]()
 
                     change_logic(comm)
+                    self.usernames[self.username] = self.hil_points
+                    Database.users_save(self.usernames)
                     player = HangmanOne(self.username, self.category, self.difficulty)
                     player.gaming()
                     break

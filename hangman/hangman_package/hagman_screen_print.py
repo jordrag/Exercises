@@ -21,7 +21,7 @@ class ScreenPrint(object):
 
     def win_result(self, hil_points, game_points):
         print(f"{self.value}, you won !")
-        print(f"Total earned game points: {game_points}")
+        print(f"Total game points left: {game_points}")
         print(f"Total HIL points: {hil_points}")
 
     def lost_result(self, hil_points, word, game_points):
