@@ -132,7 +132,7 @@ class HangmanOne(Hangman):
 
         while True:
             try:
-                a = input("Do yoy wanna quit (y/n) ?")
+                a = input("Do you wanna quit (y/n) ?")
                 if a == "y":
                     self.usernames[self.username] = self.hil_points
                     Database.users_save(self.usernames)
