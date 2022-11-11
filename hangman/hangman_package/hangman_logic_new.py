@@ -144,6 +144,8 @@ class HangmanOne(Hangman):
 
                     def change_logic(comm):
                         def cont():
+                            self.usernames[self.username] = self.hil_points
+                            Database.users_save(self.usernames)
                             pass
 
                         def change_level():
