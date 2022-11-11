@@ -19,14 +19,16 @@ class ScreenPrint(object):
     def guessed_letters(self):
         print(self.value)
 
-    def win_result(self, points):
+    def win_result(self, hil_points, game_points):
         print(f"{self.value}, you won !")
-        print(f"Total HIL points: {points}")
+        print(f"Total earned game points: {game_points}")
+        print(f"Total HIL points: {hil_points}")
 
-    def lost_result(self, points, word):
+    def lost_result(self, hil_points, word, game_points):
         print(f"Game over! {self.value}, you've lost !")
         print(f"The word is -> {word}")
-        print(f"Total HIL points: {points}")
+        print(f"Total earned game points: {game_points}")
+        print(f"Total HIL points: {hil_points}")
 
     def change_params(self,points):
         print ("Leaving...")

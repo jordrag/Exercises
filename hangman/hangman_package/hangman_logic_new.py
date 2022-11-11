@@ -41,6 +41,7 @@ class HangmanOne(Hangman):
         self.trigger = False
         self.guessed_letters = []
         self.fail_count = 0
+        self.game_points = len(self.the_word)
 
     # Making specific list according user's input data for category and difficulty level
 
@@ -113,12 +114,15 @@ class HangmanOne(Hangman):
                         if "_" not in self.user_word:
                             self.trigger = True
                             self.hil_points += 1
-                            ScreenPrint(self.username).win_result(self.hil_points)
+                            ScreenPrint(self.username).win_result(self.hil_points, self.game_points)
                     else:
                         self.fail_count += 1
+                        self.game_points -= 1
+                        if self.game_points < 0:
+                            self.game_points = 0
                         ScreenPrint(self.fail_count).hangman()
-                        if self.fail_count == len(self.the_word) + 1:
-                            ScreenPrint(self.username).lost_result(self.hil_points, self.the_word)
+                        if self.fail_count == len(self.the_word):
+                            ScreenPrint(self.username).lost_result(self.hil_points, self.the_word, self.game_points)
                             break
 
             except Exception:
@@ -182,9 +186,13 @@ class Commands(object):
         self.username = self.obj["username"]
 
     def hint(self):
-        ind = self.user_word.index("_")
-        self.user_word[ind] = self.the_word[ind]
-        ScreenPrint(self.user_word).in_game_print()
+        if self.obj["game_points"] - 2 >= 0:
+            self.obj["game_points"] -= 2
+            ind = self.user_word.index("_")
+            self.user_word[ind] = self.the_word[ind]
+            ScreenPrint(self.user_word).in_game_print()
+        else:
+            print("You haven't enough points for hint !")
 
     def stop(self):
         self.obj["trigger"] = True
@@ -195,7 +203,7 @@ class Commands(object):
         if whole_word == self.the_word or whole_word == self.the_word.lower():
             self.obj["trigger"] = True
             self.obj["hil_points"] += 1
-            ScreenPrint(self.username).win_result(self.obj["hil_points"])
+            ScreenPrint(self.username).win_result(self.obj["hil_points"],self.obj["game_points"])
         else:
             self.obj["fail_count"] += 1
             ScreenPrint(self.obj["fail_count"]).hangman()
