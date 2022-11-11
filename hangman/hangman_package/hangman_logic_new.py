@@ -29,6 +29,7 @@ class Hangman(with_metaclass(ABCMeta)):
 
 class HangmanOne(Hangman):
     def __init__(self, name, cat, diff):
+        self.exclude_list = Database.ex_word_read()
         self.usernames = Database.usernames_list
         self.username = name
         self.difficulty = diff
@@ -45,32 +46,37 @@ class HangmanOne(Hangman):
 
     # Making specific list according user's input data for category and difficulty level
 
-    def game_list(self):
-        temp_list = []
-        min_length = Database.levels[self.difficulty][0]
-        max_length = Database.levels[self.difficulty][1]
+    try:
+        def game_list(self):
+            temp_list = []
+            min_length = Database.levels[self.difficulty][0]
+            max_length = Database.levels[self.difficulty][1]
 
-        for a in Database.categories[self.category]:
-            if min_length <= len(a) <= max_length:
-                temp_list.append(a)
-        return temp_list
+            for word in Database.categories[self.category]:
+                if min_length <= len(word) <= max_length and word not in self.exclude_list:
+                    temp_list.append(word)
+            return temp_list
 
     # Taking user's profile info from database, if it doesn't exist make new user with hil_points = 0
 
-    def hil_points(self):
-        if self.username not in Database.usernames_list:
-            Database.usernames_list[self.username] = 0
+        def hil_points(self):
+            if self.username not in Database.usernames_list:
+                Database.usernames_list[self.username] = 0
 
-        return Database.usernames_list[self.username]
+            return Database.usernames_list[self.username]
 
-    def starting_data(self):
-        empty_list = []
-        rnd_number = random.randrange(0, len(self.game_list))
-        the_word = self.game_list.pop(rnd_number)
-        for lett in the_word:
-            empty_list.append("_")
-        return {"the_word": the_word, "user_word": empty_list, "words_list": self.game_list}
+        def starting_data(self):
+            empty_list = []
+            rnd_number = random.randrange(0, len(self.game_list))
+            the_word = self.game_list.pop(rnd_number)
+            self.exclude_list.append(the_word)
+            Database.exclude_word_save(self.exclude_list)
+            for lett in the_word:
+                empty_list.append("_")
+            return {"the_word": the_word, "user_word": empty_list, "words_list": self.game_list}
 
+    except Exception:
+            print("There aren't more words, pls change parameters or quit the game !")
     # **************************  The core...................  ********************************************
 
     def gaming(self):
@@ -137,6 +143,7 @@ class HangmanOne(Hangman):
                 if a == "y":
                     self.usernames[self.username] = self.hil_points
                     Database.users_save(self.usernames)
+                    Database.exclude_word_save(["blank"])
                     print("OK, your HIL points are saved, bye !")
                     break
 
@@ -145,8 +152,7 @@ class HangmanOne(Hangman):
 
                     def change_logic(comm):
                         def cont():
-                            self.exclude_word = self.the_word
-
+                            pass
                         def change_level():
                             self.difficulty = str(input("Choose difficulty level (easy, medium, hard): "))
 
@@ -168,7 +174,7 @@ class HangmanOne(Hangman):
                     break
 
             except Exception:
-                print("Invalid input !!!")
+                print("Invalid input or empty category for this level, pls make another choice !")
 
 
 # ************************* Special commands sector *********************************************
@@ -181,12 +187,7 @@ class Commands(object):
         self.the_word = self.obj["the_word"]
         self.user_word = self.obj["user_word"]
         self.username = self.obj["username"]
-        # self.trigger = self.obj["trigger"]
-        # self.guessed_letters = self.obj["guessed_letters"]
-        # self.fail_count = self.obj["fail_count"]
-        # self.hil_points = self.obj["hil_points"]
 
-    #
     def hint(self):
         if self.obj["game_points"] - 2 >= 0:
             self.obj["game_points"] -= 2
