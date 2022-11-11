@@ -177,14 +177,15 @@ class Commands(object):
 
         self.obj = obj.__dict__
         self.command = int(command)
-        self.trigger = self.obj["trigger"]
-        self.guessed_letters = self.obj["guessed_letters"]
-        self.fail_count = self.obj["fail_count"]
-        self.hil_points = self.obj["hil_points"]
         self.the_word = self.obj["the_word"]
         self.user_word = self.obj["user_word"]
         self.username = self.obj["username"]
+        # self.trigger = self.obj["trigger"]
+        # self.guessed_letters = self.obj["guessed_letters"]
+        # self.fail_count = self.obj["fail_count"]
+        # self.hil_points = self.obj["hil_points"]
 
+    #
     def hint(self):
         if self.obj["game_points"] - 2 >= 0:
             self.obj["game_points"] -= 2
@@ -212,7 +213,7 @@ class Commands(object):
         ScreenPrint(self.obj["guessed_letters"]).guessed_letters()
 
     def additional_try(self):
-        if self.hil_points - 10 >= 0 and self.fail_count >= 1:
+        if self.obj["hil_points"] - 10 >= 0 and self.obj["fail_count"] >= 1:
             self.obj["fail_count"] -= 1
             self.obj["hil_points"] -= 10
             print(f"Now you have one more try and {self.obj['hil_points']} HIL points remaining !")
