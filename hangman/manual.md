@@ -11,7 +11,7 @@ If you want to test in Pycharm you have to preinstall it before next steps below
 <img src="images/Manual_hangman_1.jpg">
 
 1. You can download the game from this [repository page](https://github.com/jordrag/Exercises/tree/main/hangman).
-The easieset way is to clone it following the instructions.
+The easiest way is to clone it following the instructions.
 2. First copy the link marked in red rectangle on the picture
 3. Open Pycharm
 4. Go to "Get from VCS"
@@ -48,12 +48,12 @@ They depend on the length of the current word and the rules for them are:**
    
     <img src="images/Manual_hangman_8.jpg">
    
-    The circled stars are your wrong guessed letters from the word. Their maximum number is the length of the word and are reduced with each wrong answer in oposition of the Game points.
+    The circled stars are your wrong guessed letters from the word. Their maximum number is the length of the word and are increased with each wrong answer in oposition of the Game points.
     * **The second option is multiple choice: (2) to quit the game, change category or level**
    
     <img src="images/Manual_hangman_9.jpg">
     
-    * **If you feel lucky or very clever you can choose the third option: (3) guess the whole word**
+    * **If you feel lucky or very clever you can choose the third option: (3) guess the whole word. You can type it with first capital or only smallcaps.**
 
     <img src="images/Manual_hangman_12.jpg">
 
