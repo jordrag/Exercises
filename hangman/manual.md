@@ -72,11 +72,11 @@ They depend on the length of the current word and the rules for them are:**
     <img src="images/Manual_hangman_14.jpg">
     <br>
     <img src="images/Manual_hangman_15.jpg">
-    <br>
+    
 5. **If you choose to leave the game from (2) your HIL points are saved to the database and next time you play with this username the game will begin with them.**
     <br>
 6. **If you hang on the rope (loose the game), you'll see the right word, your current HIL points and if you want, you can quit the game.**
     <br>
     <img src="images/Manual_hangman_16.jpg">
-    <br>
+    
 ## Step 3: Enjoy the game !!!
