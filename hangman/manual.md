@@ -79,4 +79,4 @@ They depend on the length of the current word and the rules for them are:**
     <br>
     <img src="images/Manual_hangman_16.jpg">
     
-## Step 3: Enjoy the game !!!
+# <center> **** Enjoy the game !!! ****
