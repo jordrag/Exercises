@@ -45,28 +45,28 @@ They depend on the length of the current word and the rules for them are:**
 4. **There is one magic symbol **"@"** for entering in submenu where you can choose from some additional options**
     
    <img src="images/Manual_hangman_7.jpg">
-   <br>
+    <br>
     * **The first one is "Hint" (1). The game gives you a random letter from the word.**
     <br>
     <img src="images/Manual_hangman_8.jpg">
    
     The circled stars are your wrong guessed letters from the word. Their maximum number is the length of the word and are increased with each wrong answer in oposition of the Game points.
     * **The second option is multiple choice: (2) to quit the game, change category or level**
-   <br>
+    <br>
     <img src="images/Manual_hangman_9.jpg">
     <br>
     * **If you feel lucky or very clever you can choose the third option: (3) guess the whole word. You can type it with first capital or only smallcaps.**
-   <br>
+    <br>
     <img src="images/Manual_hangman_12.jpg">
-   <br>
+    <br>
     And if you guess it you win 1 HIL point and can choose to play again or to quit.
-   <br>
+    <br>
     <img src="images/Manual_hangman_13.jpg">
-   <br>
+    <br>
     * **In every single moment of the game you can show a list of all your asked letters (4)**
-   <br>
+    <br>
     <img src="images/Manual_hangman_11.jpg">
-   <br>
+    <br>
     * **If you have too many letters more to guess but have no more lives you can exchange 10 HIL points (if you have them) for one more try in the fifth option (5)**
     <br>
     <img src="images/Manual_hangman_14.jpg">
@@ -76,7 +76,7 @@ They depend on the length of the current word and the rules for them are:**
 5. **If you choose to leave the game from (2) your HIL points are saved to the database and next time you play with this username the game will begin with them.**
     <br>
 6. **If you hang on the rope (loose the game), you'll see the right word, your current HIL points and if you want, you can quit the game.**
-   <br>
+    <br>
     <img src="images/Manual_hangman_16.jpg">
-   <br>
+    <br>
 ## Step 3: Enjoy the game !!!
