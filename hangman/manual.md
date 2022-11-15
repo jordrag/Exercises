@@ -1,4 +1,4 @@
-## **** User manual ****
+# <center> **** User manual **** </center>
 
 *A short guide for the game "Hangman" made by me.\
 It could be played by Pycharm or direct in console mode.
@@ -6,31 +6,33 @@ My examples will be from PyCharm Community Edition.*
 
 If you want to test in Pycharm you have to preinstall it before next steps below.
 
-### Step 1: Taking the game
+### *Step 1: Taking the game*
 
 <img src="images/Manual_hangman_1.jpg">
 
-1. You can download the game from this [repository page](https://github.com/jordrag/Exercises/tree/main/hangman).
+<p> 1. You can download the game from this [repository page](https://github.com/jordrag/Exercises/tree/main/hangman).
 The easiest way is to clone it following the instructions.
-2. First copy the link marked in red rectangle on the picture
-3. Open Pycharm
-4. Go to "Get from VCS"
+<p> 2. First copy the link marked in red rectangle on the picture
+<p> 3. Open Pycharm
+<p> 4. Go to "Get from VCS"
 
-<img src="images/Manual_hangman_2.jpg">
+<p> <img src="images/Manual_hangman_2.jpg">
 
-5. Paste the link copied before in the URL field and choose the directory where to clone on your computer, after that click on Clone
+<p> 5. Paste the link copied before in the URL field and choose the directory where to clone on your computer, after that click on Clone
 
-<img src="images/Manual_hangman_3.jpg">
+<p> <img src="images/Manual_hangman_3.jpg">
 
-### Step 2: Playing the game
+### *Step 2: Playing the game*
 
 1. **After the repository has been cloned, run "hangman.py" with right click on it in the Project menu** 
+
+<p></p>
 
 <img src="images/Manual_hangman_4.1.jpg">
 
 2. **At the start screen fill in your username, difficulty and level**
 
-    <img src="images/Manual_hangman_5.jpg">
+<p> <img src="images/Manual_hangman_5.jpg">
 
 3. **On the next screen you'll see your initial data: username wtih HIL points earned from all previous played games and the starting Game points for this game. \
 They depend on the length of the current word and the rules for them are:**
@@ -38,11 +40,11 @@ They depend on the length of the current word and the rules for them are:**
    * Each hint used will subtract 2 from the max score and the last chance to take a hint is when you have 2 points left
    * The score cannot be negative so if you reach 0 game points the game ends
 
-    <img src="images/Manual_hangman_6.jpg">
+<p> <img src="images/Manual_hangman_6.jpg">
 
 4. **There is one magic symbol **"@"** for entering in submenu where you can choose from some additional options**
-
-    <img src="images/Manual_hangman_7.jpg">
+    
+   <img src="images/Manual_hangman_7.jpg">
    
     * **The first one is "Hint" (1). The game gives you a random letter from the word.**
    
