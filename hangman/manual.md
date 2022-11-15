@@ -44,7 +44,7 @@ They depend on the length of the current word and the rules for them are:**
 
 4. **There is one magic symbol **"@"** for entering in submenu where you can choose from some additional options**
     
-   <img src="images/Manual_hangman_7.jpg"><br\>
+    <img src="images/Manual_hangman_7.jpg">
     
     * **The first one is "Hint" (1). The game gives you a random letter from the word.**
     <br>
