@@ -47,7 +47,7 @@ They depend on the length of the current word and the rules for them are:**
    <img src="images/Manual_hangman_7.jpg">
    
     * **The first one is "Hint" (1). The game gives you a random letter from the word.**
-   
+    <br>
     <img src="images/Manual_hangman_8.jpg">
    
     The circled stars are your wrong guessed letters from the word. Their maximum number is the length of the word and are increased with each wrong answer in oposition of the Game points.
