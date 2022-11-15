@@ -54,19 +54,19 @@ They depend on the length of the current word and the rules for them are:**
     * **The second option is multiple choice: (2) to quit the game, change category or level**
     <br>
     <img src="images/Manual_hangman_9.jpg">
-    <br>
+    
     * **If you feel lucky or very clever you can choose the third option: (3) guess the whole word. You can type it with first capital or only smallcaps.**
     <br>
     <img src="images/Manual_hangman_12.jpg">
-    <br>
+    
     And if you guess it you win 1 HIL point and can choose to play again or to quit.
     <br>
     <img src="images/Manual_hangman_13.jpg">
-    <br>
+    
     * **In every single moment of the game you can show a list of all your asked letters (4)**
     <br>
     <img src="images/Manual_hangman_11.jpg">
-    <br>
+    
     * **If you have too many letters more to guess but have no more lives you can exchange 10 HIL points (if you have them) for one more try in the fifth option (5)**
     <br>
     <img src="images/Manual_hangman_14.jpg">
