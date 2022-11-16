@@ -5,7 +5,7 @@ from hangman_package.hangman_db import *
 from hangman_package.hagman_screen_print import *
 
 
-# ******************************** The Abstract class *******************************************************
+# ******************************** The Abstract class **********************************************
 class Hangman(with_metaclass(ABCMeta)):
 
     @abstractmethod
@@ -25,7 +25,7 @@ class Hangman(with_metaclass(ABCMeta)):
         pass
 
 
-# ***************************************** The game logic ***************************************************
+# ***************************************** The game logic *****************************************
 
 class HangmanOne(Hangman):
     def __init__(self, name, cat, diff):
@@ -46,38 +46,36 @@ class HangmanOne(Hangman):
 
     # Making specific list according user's input data for category and difficulty level
 
-    try:
-        def game_list(self):
-            temp_list = []
-            min_length = Database.levels[self.difficulty][0]
-            max_length = Database.levels[self.difficulty][1]
+    def game_list(self):
+        temp_list = []
+        min_length = Database.levels[self.difficulty][0]
+        max_length = Database.levels[self.difficulty][1]
 
-            for word in Database.categories[self.category]:
-                if min_length <= len(word) <= max_length and word not in self.exclude_list:
-                    temp_list.append(word)
-            return temp_list
+        for word in Database.categories[self.category]:
+            if min_length <= len(word) <= max_length and word not in self.exclude_list:
+                temp_list.append(word)
+        return temp_list
 
-    # Taking user's profile info from database, if it doesn't exist make new user with hil_points = 0
+# Taking user's profile info from database, if it doesn't exist make new user with hil_points = 0
 
-        def hil_points(self):
-            if self.username not in Database.usernames_list:
-                Database.usernames_list[self.username] = 0
+    def hil_points(self):
+        if self.username not in Database.usernames_list:
+            Database.usernames_list[self.username] = 0
 
-            return Database.usernames_list[self.username]
+        return Database.usernames_list[self.username]
 
-        def starting_data(self):
-            empty_list = []
-            rnd_number = random.randrange(0, len(self.game_list))
-            the_word = self.game_list.pop(rnd_number)
-            self.exclude_list.append(the_word)
-            Database.exclude_word_save(self.exclude_list)
-            for lett in the_word:
-                empty_list.append("_")
-            return {"the_word": the_word, "user_word": empty_list, "words_list": self.game_list}
+    def starting_data(self):
+        empty_list = []
+        rnd_number = random.randrange(0, len(self.game_list))
+        the_word = self.game_list.pop(rnd_number)
+        self.exclude_list.append(the_word)
+        Database.exclude_word_save(self.exclude_list)
+        for lett in the_word:
+            empty_list.append("_")
+        return {"the_word": the_word, "user_word": empty_list, "words_list": self.game_list}
 
-    except Exception:
-            print("There aren't more words, pls change parameters or quit the game !")
-    # **************************  The core...................  ********************************************
+
+    # **************************  The core...................  *************************************
 
     def gaming(self):
         print()
@@ -86,7 +84,8 @@ class HangmanOne(Hangman):
         ScreenPrint(self.the_word).empty_word()
 
         ''' Commands through the game for exit, hints, whole word suggestion, etc..
-        1. Hint, 2. Quit game/Change category/Change diff, 3. Guess whole word, 4. Show/hide guessed letters,
+        1. Hint, 2. Quit game/Change category/Change diff, 3. Guess whole word, 
+        4. Show/hide guessed letters,
         5. Exchange HIL points to 1 additional try
         '''
 
@@ -102,7 +101,8 @@ class HangmanOne(Hangman):
 
             try:
                 if letter == "@":
-                    command = int(input("Choose command (1. Hint, 2. Quit game/Change category/Change diff, "
+                    command = int(input("Choose command (1. Hint, "
+                                        "2. Quit game/Change category/Change diff, "
                                         "3. Guess whole word, 4. Show/hide guessed letters, "
                                         "5. Exchange HIL points to 1 additional try --> "))
 
@@ -129,7 +129,8 @@ class HangmanOne(Hangman):
                             self.game_points = 0
                         ScreenPrint(self.fail_count).hangman()
                         if self.fail_count == len(self.the_word):
-                            ScreenPrint(self.username).lost_result(self.hil_points, self.the_word, self.game_points)
+                            ScreenPrint(self.username).lost_result(self.hil_points,
+                                                                   self.the_word, self.game_points)
                             break
 
             except Exception:
@@ -154,10 +155,12 @@ class HangmanOne(Hangman):
                         def cont():
                             pass
                         def change_level():
-                            self.difficulty = str(input("Choose difficulty level (easy, medium, hard): "))
+                            self.difficulty = str(input("Choose difficulty level (easy, "
+                                                        "medium, hard): "))
 
                         def change_category():
-                            self.category = str(input("Choose category of words (animals, cars, cities): "))
+                            self.category = str(input("Choose category of words (animals, cars, "
+                                                      "cities): "))
 
                         ops = {1: cont,
                                2: change_level,
@@ -177,7 +180,7 @@ class HangmanOne(Hangman):
                 print("Invalid input or empty category for this level, pls make another choice !")
 
 
-# ************************* Special commands sector *********************************************
+# **************************** Special commands sector *********************************************
 
 class Commands(object):
     def __init__(self, obj, command):
@@ -234,4 +237,4 @@ class Commands(object):
         func_obj = getattr(self, func_name)
         func_obj()
 
-# *************************************************************************************************************
+# **************************************************************************************************
