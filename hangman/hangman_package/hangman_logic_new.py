@@ -22,7 +22,9 @@ from hangman_package.hagman_screen_print import *
         self.trigger -> a trigger for switching off the game
         self.guessed_letters -> list of asked letters during the game
         self.fail_count -> fail counter for each word
-        self.game_points -> game points for each word, it begins with maximum number (the word length)
+        self.game_points -> game points for each word, it begins with maximum number 
+        (the word length)
+        self.visualisation -> variable for method of printing
     """
 
 # ******************************** The Abstract class **********************************************
@@ -38,6 +40,10 @@ class AbcHangman(with_metaclass(ABCMeta)):
 
     @abstractmethod
     def starting_data(self):
+        pass
+
+    @abstractmethod
+    def check_letters(self):
         pass
 
     @abstractmethod
@@ -63,6 +69,7 @@ class HangmanOne(AbcHangman):
         self.guessed_letters = []
         self.fail_count = 0
         self.game_points = len(self.the_word)
+        self.visualisation = ScreenPrint
 
     # Making specific list according user's input data for category and difficulty level
 
@@ -94,15 +101,41 @@ class HangmanOne(AbcHangman):
             empty_list.append("_")
         return {"the_word": the_word, "user_word": empty_list, "words_list": self.game_list}
 
+    # Checking the letters entered by the user
 
-    # **************************  The core...................  *************************************
+    def check_letters(self, letter, guessed_right):
+        self.guessed_letters.append(letter)
+        for i in range(len(self.the_word)):
+            if self.the_word[i] == letter or self.the_word[i] == letter.lower() \
+                    or self.the_word[i] == letter.upper():
+                self.user_word[i] = self.the_word[i]
+                guessed_right += 1
 
+        if guessed_right != 0:
+            ScreenPrint(self.user_word).in_game_print()
+            if "_" not in self.user_word:
+                self.trigger = True
+                self.hil_points += 1
+                ScreenPrint(self.username).win_result(self.hil_points, self.game_points)
+        else:
+            self.fail_count += 1
+            self.game_points -= 1
+            if self.game_points < 0:
+                self.game_points = 0
+            ScreenPrint(self.fail_count).hangman()
+            if self.fail_count == len(self.the_word):
+                ScreenPrint(self.username).lost_result(self.hil_points,
+                                                       self.the_word, self.game_points)
+                self.trigger = False
+        return self.trigger
+
+    # The gameplay itself
     def gaming(self):
 
         print()
         print(f"Hello {self.username}, you have {self.hil_points} HIL points, let's play !")
 
-        ScreenPrint(self.the_word).empty_word()
+        self.visualisation(self.the_word).empty_word()
 
         # Game loop for taking letters or commands from user
 
@@ -124,29 +157,9 @@ class HangmanOne(AbcHangman):
                     Commands(self, command).manage_comms()
 
                 else:
-                    self.guessed_letters.append(letter)
-                    for i in range(len(self.the_word)):
-                        if self.the_word[i] == letter or self.the_word[i] == letter.lower() \
-                                or self.the_word[i] == letter.upper():
-                            self.user_word[i] = self.the_word[i]
-                            guessed_right += 1
-
-                    if guessed_right != 0:
-                        ScreenPrint(self.user_word).in_game_print()
-                        if "_" not in self.user_word:
-                            self.trigger = True
-                            self.hil_points += 1
-                            ScreenPrint(self.username).win_result(self.hil_points, self.game_points)
-                    else:
-                        self.fail_count += 1
-                        self.game_points -= 1
-                        if self.game_points < 0:
-                            self.game_points = 0
-                        ScreenPrint(self.fail_count).hangman()
-                        if self.fail_count == len(self.the_word):
-                            ScreenPrint(self.username).lost_result(self.hil_points,
-                                                                   self.the_word, self.game_points)
-                            break
+                    self.check_letters(letter, guessed_right)
+                    if self.trigger:
+                        break
 
             except Exception:
                 print("Please choose only from the options above !!!")
@@ -218,26 +231,26 @@ class Commands(object):
             self.player["game_points"] -= 2
             ind = self.user_word.index("_")
             self.user_word[ind] = self.the_word[ind]
-            ScreenPrint(self.user_word).in_game_print()
+            self.visualisation(self.user_word).in_game_print()
         else:
             print("You haven't enough points for hint !")
 
     def stop(self):
         self.player["trigger"] = True
-        ScreenPrint(self.username).change_params(self.player["hil_points"])
+        self.visualisation(self.username).change_params(self.player["hil_points"])
 
     def word(self):
         whole_word = input("Please, enter the whole word you think it is: ")
         if whole_word == self.the_word or whole_word == self.the_word.lower():
             self.player["trigger"] = True
             self.player["hil_points"] += 1
-            ScreenPrint(self.username).win_result(self.player["hil_points"], self.player["game_points"])
+            self.visualisation(self.username).win_result(self.player["hil_points"], self.player["game_points"])
         else:
             self.player["fail_count"] += 1
-            ScreenPrint(self.player["fail_count"]).hangman()
+            self.visualisation(self.player["fail_count"]).hangman()
 
     def letters(self):
-        ScreenPrint(self.player["guessed_letters"]).guessed_letters()
+        self.visualisation(self.player["guessed_letters"]).guessed_letters()
 
     def additional_try(self):
         if self.player["hil_points"] - 10 >= 0 and self.player["fail_count"] >= 1:
