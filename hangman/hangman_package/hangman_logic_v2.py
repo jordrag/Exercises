@@ -95,7 +95,35 @@ class HangmanOne(AbcHangman):
         return {"the_word": the_word, "user_word": empty_list, "words_list": self.game_list}
 
 
-    # **************************  The core...................  *************************************
+    # Checking the letters entered by the user
+
+    def check_letters(self, letter, guessed_right):
+        self.guessed_letters.append(letter)
+        for i in range(len(self.the_word)):
+            if self.the_word[i] == letter or self.the_word[i] == letter.lower() \
+                    or self.the_word[i] == letter.upper():
+                self.user_word[i] = self.the_word[i]
+                guessed_right += 1
+
+        if guessed_right != 0:
+            ScreenPrint(self.user_word).in_game_print()
+            if "_" not in self.user_word:
+                self.trigger = True
+                self.hil_points += 1
+                ScreenPrint(self.username).win_result(self.hil_points, self.game_points)
+        else:
+            self.fail_count += 1
+            self.game_points -= 1
+            if self.game_points < 0:
+                self.game_points = 0
+            ScreenPrint(self.fail_count).hangman()
+            if self.fail_count == len(self.the_word):
+                ScreenPrint(self.username).lost_result(self.hil_points,
+                                                       self.the_word, self.game_points)
+                self.trigger = False
+        return self.trigger
+
+    # The gameplay itself
 
     def gaming(self):
 
@@ -104,7 +132,7 @@ class HangmanOne(AbcHangman):
 
         ScreenPrint(self.the_word).empty_word()
 
-        # Game loop for taking letters or commands from user
+        # Taking letters or commands from user
 
         while True:
             if self.trigger:
@@ -124,29 +152,9 @@ class HangmanOne(AbcHangman):
                     Commands(self, command).manage_comms()
 
                 else:
-                    self.guessed_letters.append(letter)
-                    for i in range(len(self.the_word)):
-                        if self.the_word[i] == letter or self.the_word[i] == letter.lower() \
-                                or self.the_word[i] == letter.upper():
-                            self.user_word[i] = self.the_word[i]
-                            guessed_right += 1
-
-                    if guessed_right != 0:
-                        ScreenPrint(self.user_word).in_game_print()
-                        if "_" not in self.user_word:
-                            self.trigger = True
-                            self.hil_points += 1
-                            ScreenPrint(self.username).win_result(self.hil_points, self.game_points)
-                    else:
-                        self.fail_count += 1
-                        self.game_points -= 1
-                        if self.game_points < 0:
-                            self.game_points = 0
-                        ScreenPrint(self.fail_count).hangman()
-                        if self.fail_count == len(self.the_word):
-                            ScreenPrint(self.username).lost_result(self.hil_points,
-                                                                   self.the_word, self.game_points)
-                            break
+                    self.check_letters(letter, guessed_right)
+                    if self.trigger:
+                        break
 
             except Exception:
                 print("Please choose only from the options above !!!")
