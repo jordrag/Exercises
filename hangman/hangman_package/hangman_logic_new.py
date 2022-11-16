@@ -4,9 +4,29 @@ from six import with_metaclass
 from hangman_package.hangman_db import *
 from hangman_package.hagman_screen_print import *
 
+""" The main logic of the game splitted in two main parts: 
+    HangmanOne -> part of the main abstract class AbcHangman and responsible for the main gameplay
+    Commands -> where the special commands are separated
+    In the AbcHangman class main used variables are:
+        self.exclude_list -> responsible to not repeat any word in the game
+        self.usernames -> all usernames listed in the database
+        self.username -> the current player name
+        self.difficulty -> the chosen level to play
+        self.category -> the chosen category to play
+        self.game_list -> setting a list of words matching the player conditions
+        self.hil_points -> player's hil_points taken from the database
+        self.starting_data -> complete set of starting data for current game according previous 
+        conditions
+        self.the_word -> the concrete word this game
+        self.user_word -> first and empty word marked with dashes equivalent to the_word
+        self.trigger -> a trigger for switching off the game
+        self.guessed_letters -> list of asked letters during the game
+        self.fail_count -> fail counter for each word
+        self.game_points -> game points for each word, it begins with maximum number (the word length)
+    """
 
 # ******************************** The Abstract class **********************************************
-class Hangman(with_metaclass(ABCMeta)):
+class AbcHangman(with_metaclass(ABCMeta)):
 
     @abstractmethod
     def game_list(self):
@@ -27,7 +47,7 @@ class Hangman(with_metaclass(ABCMeta)):
 
 # ***************************************** The game logic *****************************************
 
-class HangmanOne(Hangman):
+class HangmanOne(AbcHangman):
     def __init__(self, name, cat, diff):
         self.exclude_list = Database.ex_word_read()
         self.usernames = Database.usernames_list
@@ -56,7 +76,7 @@ class HangmanOne(Hangman):
                 temp_list.append(word)
         return temp_list
 
-# Taking user's profile info from database, if it doesn't exist make new user with hil_points = 0
+    # Taking user's profile info from database, if it doesn't exist make new user with hil_points = 0
 
     def hil_points(self):
         if self.username not in Database.usernames_list:
@@ -78,16 +98,11 @@ class HangmanOne(Hangman):
     # **************************  The core...................  *************************************
 
     def gaming(self):
+
         print()
         print(f"Hello {self.username}, you have {self.hil_points} HIL points, let's play !")
 
         ScreenPrint(self.the_word).empty_word()
-
-        ''' Commands through the game for exit, hints, whole word suggestion, etc..
-        1. Hint, 2. Quit game/Change category/Change diff, 3. Guess whole word, 
-        4. Show/hide guessed letters,
-        5. Exchange HIL points to 1 additional try
-        '''
 
         # Game loop for taking letters or commands from user
 
@@ -183,17 +198,24 @@ class HangmanOne(Hangman):
 # **************************** Special commands sector *********************************************
 
 class Commands(object):
-    def __init__(self, obj, command):
+    ''' Commands through the game for exit, hints, whole word suggestion, etc..
+                    1. Hint,
+                    2. Quit game/Change category/Change diff,
+                    3. Guess whole word,
+                    4. Show/hide guessed letters,
+                    5. Exchange HIL points to 1 additional try
+            '''
+    def __init__(self, player, command):
 
-        self.obj = obj.__dict__
+        self.player = player.__dict__
         self.command = int(command)
-        self.the_word = self.obj["the_word"]
-        self.user_word = self.obj["user_word"]
-        self.username = self.obj["username"]
+        self.the_word = self.player["the_word"]
+        self.user_word = self.player["user_word"]
+        self.username = self.player["username"]
 
     def hint(self):
-        if self.obj["game_points"] - 2 >= 0:
-            self.obj["game_points"] -= 2
+        if self.player["game_points"] - 2 >= 0:
+            self.player["game_points"] -= 2
             ind = self.user_word.index("_")
             self.user_word[ind] = self.the_word[ind]
             ScreenPrint(self.user_word).in_game_print()
@@ -201,27 +223,27 @@ class Commands(object):
             print("You haven't enough points for hint !")
 
     def stop(self):
-        self.obj["trigger"] = True
-        ScreenPrint(self.username).change_params(self.obj["hil_points"])
+        self.player["trigger"] = True
+        ScreenPrint(self.username).change_params(self.player["hil_points"])
 
     def word(self):
         whole_word = input("Please, enter the whole word you think it is: ")
         if whole_word == self.the_word or whole_word == self.the_word.lower():
-            self.obj["trigger"] = True
-            self.obj["hil_points"] += 1
-            ScreenPrint(self.username).win_result(self.obj["hil_points"],self.obj["game_points"])
+            self.player["trigger"] = True
+            self.player["hil_points"] += 1
+            ScreenPrint(self.username).win_result(self.player["hil_points"], self.player["game_points"])
         else:
-            self.obj["fail_count"] += 1
-            ScreenPrint(self.obj["fail_count"]).hangman()
+            self.player["fail_count"] += 1
+            ScreenPrint(self.player["fail_count"]).hangman()
 
     def letters(self):
-        ScreenPrint(self.obj["guessed_letters"]).guessed_letters()
+        ScreenPrint(self.player["guessed_letters"]).guessed_letters()
 
     def additional_try(self):
-        if self.obj["hil_points"] - 10 >= 0 and self.obj["fail_count"] >= 1:
-            self.obj["fail_count"] -= 1
-            self.obj["hil_points"] -= 10
-            print(f"Now you have one more try and {self.obj['hil_points']} HIL points remaining !")
+        if self.player["hil_points"] - 10 >= 0 and self.player["fail_count"] >= 1:
+            self.player["fail_count"] -= 1
+            self.player["hil_points"] -= 10
+            print(f"Now you have one more try and {self.player['hil_points']} HIL points remaining !")
         else:
             print("You don't have enough HIL points !")
 

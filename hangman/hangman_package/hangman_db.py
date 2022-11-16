@@ -1,4 +1,4 @@
-# **************** The database for users, categories and levels in the game *********************************
+# **************** The database for users, categories and levels in the game ***********************
 import json
 
 
@@ -32,4 +32,4 @@ class Database(object):
             exclude_list = json.load(read_ex_word)
         return exclude_list
 
-# ************************************************************************************************************
+# **************************************************************************************************
