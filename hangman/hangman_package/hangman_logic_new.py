@@ -126,7 +126,7 @@ class HangmanOne(AbcHangman):
             if self.fail_count == len(self.the_word):
                 ScreenPrint(self.username).lost_result(self.hil_points,
                                                        self.the_word, self.game_points)
-                self.trigger = False
+                self.trigger = True
         return self.trigger
 
     # The gameplay itself
