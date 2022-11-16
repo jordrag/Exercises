@@ -18,6 +18,6 @@ class TablePrinter(object):
         # Printing the new matrix with data collected in it
         for line in result:
             print (line)
-        print
+        print()
 
 # ********************************* End of presentation layer *********************************************

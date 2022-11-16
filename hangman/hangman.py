@@ -1,4 +1,4 @@
-from hangman_package.hangman_logic_v2 import *
+from hangman_package.hangman_logic_new import *
 
 """This is the main interface to communicate with the user when the game begins and when want 
     to change any parameter:

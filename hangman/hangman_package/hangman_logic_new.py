@@ -16,7 +16,7 @@ from hangman_package.hagman_screen_print import *
         self.game_list -> setting a list of words matching the player conditions
         self.hil_points -> player's hil_points taken from the database
         self.starting_data -> complete set of starting data for current game according previous 
-        conditions
+        conditions 
         self.the_word -> the concrete word this game
         self.user_word -> first and empty word marked with dashes equivalent to the_word
         self.trigger -> a trigger for switching off the game

@@ -9,7 +9,7 @@ from six import with_metaclass
     guessed_letters -> prints the all asked letters to this moment, on demand
     win_result -> used when the player guesses the word
     lost_result -> used when the player doesn't guess the word
-    change_params -> used if user changes parameters of the game
+    change_params -> used if user changes parameters of the game 
     """
 
 
