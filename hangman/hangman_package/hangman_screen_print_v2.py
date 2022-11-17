@@ -1,7 +1,6 @@
 from abc import ABCMeta, abstractmethod
 from six import with_metaclass
 
-# ******************************** The Abstract class **********************************************
 class AbcPrint(with_metaclass(ABCMeta)):
     """ In this module is immplemented the whole visualisation of the game, no matter
         of the print media.
@@ -87,8 +86,6 @@ class ScreenPrint(AbcPrint):
 
         print("Hello, let's play *** Hangman *** !")
         print()
-
-        # While loop for entering correct data from user
 
         while True:
             try:
