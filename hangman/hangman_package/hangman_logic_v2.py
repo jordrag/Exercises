@@ -183,7 +183,8 @@ class HangmanOne(AbcHangman):
         else:
             self.saving_data()
             change_command = int(change_var[1])
-            changes = self.visualisation.change_logic(change_command, self.difficulty, self.category)
+            changes = self.visualisation.change_logic(change_command, self.difficulty,
+                                                      self.category)
             self.difficulty = changes[0]
             self.category = changes[1]
             run(self.username, self.difficulty, self.category)
@@ -231,7 +232,8 @@ class Commands(object):
         if whole_word == self.the_word or whole_word == self.the_word.lower():
             self.player["trigger"] = True
             self.player["hil_points"] += 1
-            self.visualisation(self.username).printing_win_result(self.player["hil_points"], self.player["game_points"])
+            self.visualisation(self.username).printing_win_result(self.player["hil_points"],
+                                                                  self.player["game_points"])
         else:
             self.player["fail_count"] += 1
             self.visualisation(self.player["fail_count"]).printing_hangman()
@@ -247,7 +249,8 @@ class Commands(object):
         if self.player["hil_points"] - 10 >= 0 and self.player["fail_count"] >= 1:
             self.player["fail_count"] -= 1
             self.player["hil_points"] -= 10
-            print(f"Now you have one more try and {self.player['hil_points']} HIL points remaining !")
+            print(f"Now you have one more try and {self.player['hil_points']} "
+                  f"HIL points remaining !")
         else:
             print("You don't have enough HIL points !")
 
