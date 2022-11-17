@@ -17,6 +17,12 @@ class AbcHangman(with_metaclass(ABCMeta)):
     @abstractmethod
     def setting_start_data(self):
         pass
+    @abstractmethod
+    def check_letters(self):
+        pass
+    @abstractmethod
+    def saving_data(self):
+        pass
 
     @abstractmethod
     def gaming(self):
