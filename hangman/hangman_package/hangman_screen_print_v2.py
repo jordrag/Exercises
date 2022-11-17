@@ -1,16 +1,21 @@
 from abc import ABCMeta, abstractmethod
 from six import with_metaclass
-# from hangman_package.hangman_logic_v2 import *
 
 """ In this module is immplemented the whole visualisation of the game, no matter 
     of the print media:
-    empty_word -> prints the entire empty word in the beggining of the game
-    in_game_print -> prints the word during the game
-    hangman -> prints the progress of wrong answers (hanging man)
-    guessed_letters -> prints the all asked letters to this moment, on demand
-    win_result -> used when the player guesses the word
-    lost_result -> used when the player doesn't guess the word
-    change_params -> used if user changes parameters of the game 
+    entering_game -> start screen, welcomes and takes data from user
+    welcoming -> giving info about starting HIL points
+    printing_empty_word -> prints the entire empty word in the beggining of the game
+    asking_letter -> asks for letter or command in the word
+    analysing_letter -> make difference between letter and command
+    changing_state -> purpose to quit or make changes in game parameters
+    change_logic -> making changes in game parameters
+    printing_in_game -> prints the word during the game
+    printing_hangman -> prints the progress of wrong answers (hanging man)
+    presenting_asked_letters -> prints the all asked letters to this moment, on demand
+    printing_win_result -> used when the player guesses the word
+    printing_lost_result -> used when the player doesn't guess the word
+    leaving_game -> printing total HIL points at the end of the game 
     """
 
 
@@ -41,7 +46,7 @@ class AbcPrint(with_metaclass(ABCMeta)):
         pass
 
     @abstractmethod
-    def change_params(self):
+    def leaving_game(self):
         pass
 
 
@@ -155,7 +160,7 @@ class ScreenPrint(AbcPrint):
         print(f"Total earned game points: {game_points}")
         print(f"Total HIL points: {hil_points}")
 
-    def change_params(self,points):
+    def leaving_game(self, points):
         print ("Leaving...")
         print(f"Total HIL points: {points}")
 

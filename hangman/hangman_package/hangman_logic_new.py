@@ -2,7 +2,7 @@ import random
 from abc import ABCMeta, abstractmethod
 from six import with_metaclass
 from hangman_package.hangman_db import *
-from hangman_package.hagman_screen_print import *
+from hangman_package.hangman_screen_print_v2 import *
 
 """ The main logic of the game splitted in two main parts: 
     HangmanOne -> part of the main abstract class AbcHangman and responsible for the main gameplay
@@ -112,20 +112,20 @@ class HangmanOne(AbcHangman):
                 guessed_right += 1
 
         if guessed_right != 0:
-            ScreenPrint(self.user_word).in_game_print()
+            ScreenPrint(self.user_word).printing_in_game()
             if "_" not in self.user_word:
                 self.trigger = True
                 self.hil_points += 1
-                ScreenPrint(self.username).win_result(self.hil_points, self.game_points)
+                ScreenPrint(self.username).printing_win_result(self.hil_points, self.game_points)
         else:
             self.fail_count += 1
             self.game_points -= 1
             if self.game_points < 0:
                 self.game_points = 0
-            ScreenPrint(self.fail_count).hangman()
+            ScreenPrint(self.fail_count).printing_hangman()
             if self.fail_count == len(self.the_word):
-                ScreenPrint(self.username).lost_result(self.hil_points,
-                                                       self.the_word, self.game_points)
+                ScreenPrint(self.username).printing_lost_result(self.hil_points,
+                                                                self.the_word, self.game_points)
                 self.trigger = True
         return self.trigger
 
@@ -135,7 +135,7 @@ class HangmanOne(AbcHangman):
         print()
         print(f"Hello {self.username}, you have {self.hil_points} HIL points, let's play !")
 
-        self.visualisation(self.the_word).empty_word()
+        self.visualisation(self.the_word).printing_empty_word()
 
         # Game loop for taking letters or commands from user
 
@@ -231,26 +231,26 @@ class Commands(object):
             self.player["game_points"] -= 2
             ind = self.user_word.index("_")
             self.user_word[ind] = self.the_word[ind]
-            self.visualisation(self.user_word).in_game_print()
+            self.visualisation(self.user_word).printing_in_game()
         else:
             print("You haven't enough points for hint !")
 
     def stop(self):
         self.player["trigger"] = True
-        self.visualisation(self.username).change_params(self.player["hil_points"])
+        self.visualisation(self.username).leaving_game(self.player["hil_points"])
 
     def word(self):
         whole_word = input("Please, enter the whole word you think it is: ")
         if whole_word == self.the_word or whole_word == self.the_word.lower():
             self.player["trigger"] = True
             self.player["hil_points"] += 1
-            self.visualisation(self.username).win_result(self.player["hil_points"], self.player["game_points"])
+            self.visualisation(self.username).printing_win_result(self.player["hil_points"], self.player["game_points"])
         else:
             self.player["fail_count"] += 1
-            self.visualisation(self.player["fail_count"]).hangman()
+            self.visualisation(self.player["fail_count"]).printing_hangman()
 
     def letters(self):
-        self.visualisation(self.player["guessed_letters"]).guessed_letters()
+        self.visualisation(self.player["guessed_letters"]).presenting_asked_letters()
 
     def additional_try(self):
         if self.player["hil_points"] - 10 >= 0 and self.player["fail_count"] >= 1:
